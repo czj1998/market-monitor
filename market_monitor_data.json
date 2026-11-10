@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10 01:54:55",
+  "generated_at": "2026-11-10 02:15:28",
   "indices": {
     "^GSPC": {
       "price": 7549.94,
@@ -72,7 +72,7 @@
       "previous_close": 181.6,
       "change": -2.93,
       "change_pct": -1.61,
-      "high": 179.92,
+      "high": 179.91,
       "low": 170.24
     },
     "TSM": {
@@ -112,7 +112,7 @@
       "previous_close": 656.39,
       "change": 76.76,
       "change_pct": 11.69,
-      "high": 744.46,
+      "high": 744.74,
       "low": 689.65
     },
     "MSFT": {
@@ -152,7 +152,7 @@
     "vix_value": 19.92,
     "vix_change_pct": -22.31,
     "state": "健康常态 / 情绪均衡",
-    "advice": "波动率处于历史均值区间，以基本面与业绩驱动为主，顺势操作。"
+    "advice": "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。"
   },
   "star50_prediction": {
     "composite_score": 4.06,
@@ -168,5 +168,29 @@
     "down_count": 1,
     "dominant_style": "进攻型成长 (High Beta Tech)",
     "money_theme": "科技主线全面爆发，资金激进进攻"
+  },
+  "midday_arbitrage": {
+    "smic": {
+      "name": "中芯国际",
+      "price": 47.72,
+      "prev": 46.04,
+      "pct": 3.65
+    },
+    "huahong": {
+      "name": "华虹宏力",
+      "price": 74.6,
+      "prev": 71.85,
+      "pct": 3.83
+    },
+    "star_etf": {
+      "name": "科创50ETF华夏",
+      "price": 1.341,
+      "prev": 1.327,
+      "pct": 1.06
+    },
+    "ks11": {
+      "price": 5217.74,
+      "pct": 3.12
+    }
   }
 }

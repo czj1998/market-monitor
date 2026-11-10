@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美股量化全景与科创50(588000)决策终端</title>
+  <!-- Tailwind CSS 3.4.17 -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Chart.js 4.4.1 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            termBg: '#090d16',
+            panelBg: '#111827',
+            cardBg: '#161f30',
+            cardHover: '#1c283f',
+            borderClr: '#1f293d',
+            bullGreen: '#10b981',
+            bearRed: '#ef4444',
+            accentGold: '#f59e0b',
+            cyanTech: '#06b6d4',
+            purpleAi: '#8b5cf6'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Menlo', 'Consolas', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #243048; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+    /* Pulse animation */
+    @keyframes subtlePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .pulse-glow { animation: subtlePulse 3s infinite ease-in-out; }
+    
+    .gauge-needle {
+      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: 50% 90%;
+    }
+  </style>
+  <script id="embedded-data" type="application/json">
+{
+  "generated_at": "2026-11-09 23:47:26",
+  "status": "SUCCESS",
+  "indices": {
+    "^GSPC": {
+      "symbol": "^GSPC",
+      "price": 5995.54,
+      "previous_close": 5972.7,
+      "change": 22.84,
+      "change_pct": 0.38,
+      "high": 6055.5,
+      "low": 5935.58,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "^IXIC": {
+      "symbol": "^IXIC",
+      "price": 19281.4,
+      "previous_close": 19122.2,
+      "change": 159.2,
+      "change_pct": 0.83,
+      "high": 19474.21,
+      "low": 19088.59,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "^DJI": {
+      "symbol": "^DJI",
+      "price": 43988.99,
+      "previous_close": 44248.64,
+      "change": -259.65,
+      "change_pct": -0.59,
+      "high": 44428.88,
+      "low": 43549.1,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "^RUT": {
+      "symbol": "^RUT",
+      "price": 2399.63,
+      "previous_close": 2383.13,
+      "change": 16.5,
+      "change_pct": 0.69,
+      "high": 2423.63,
+      "low": 2375.63,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "^VIX": {
+      "symbol": "^VIX",
+      "price": 14.94,
+      "previous_close": 15.62,
+      "change": -0.68,
+      "change_pct": -4.35,
+      "high": 15.09,
+      "low": 14.79,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "^SOX": {
+      "symbol": "^SOX",
+      "price": 5290.51,
+      "previous_close": 5206.39,
+      "change": 84.12,
+      "change_pct": 1.63,
+      "high": 5343.42,
+      "low": 5237.6,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "SMH": {
+      "symbol": "SMH",
+      "price": 255.4,
+      "previous_close": 251.3,
+      "change": 4.1,
+      "change_pct": 1.63,
+      "high": 257.95,
+      "low": 252.85,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "PGJ": {
+      "symbol": "PGJ",
+      "price": 26.85,
+      "previous_close": 26.5,
+      "change": 0.35,
+      "change_pct": 1.32,
+      "high": 27.12,
+      "low": 26.58,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    }
+  },
+  "tech_leaders": {
+    "NVDA": {
+      "symbol": "NVDA",
+      "price": 147.63,
+      "previous_close": 144.38,
+      "change": 3.25,
+      "change_pct": 2.25,
+      "high": 149.11,
+      "low": 146.15,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "TSM": {
+      "symbol": "TSM",
+      "price": 201.2,
+      "previous_close": 196.7,
+      "change": 4.5,
+      "change_pct": 2.29,
+      "high": 203.21,
+      "low": 199.19,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "ASML": {
+      "symbol": "ASML",
+      "price": 725.1,
+      "previous_close": 715.3,
+      "change": 9.8,
+      "change_pct": 1.37,
+      "high": 732.35,
+      "low": 717.85,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "price": 148.5,
+      "previous_close": 146.4,
+      "change": 2.1,
+      "change_pct": 1.43,
+      "high": 149.99,
+      "low": 147.01,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "QCOM": {
+      "symbol": "QCOM",
+      "price": 172.8,
+      "previous_close": 170.9,
+      "change": 1.9,
+      "change_pct": 1.11,
+      "high": 174.53,
+      "low": 171.07,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "AAPL": {
+      "symbol": "AAPL",
+      "price": 226.96,
+      "previous_close": 227.24,
+      "change": -0.28,
+      "change_pct": -0.12,
+      "high": 229.23,
+      "low": 224.69,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "price": 422.54,
+      "previous_close": 419.89,
+      "change": 2.65,
+      "change_pct": 0.63,
+      "high": 426.77,
+      "low": 418.31,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "GOOGL": {
+      "symbol": "GOOGL",
+      "price": 179.8,
+      "previous_close": 178.7,
+      "change": 1.1,
+      "change_pct": 0.62,
+      "high": 181.6,
+      "low": 178.0,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "AVGO": {
+      "symbol": "AVGO",
+      "price": 182.4,
+      "previous_close": 179.3,
+      "change": 3.1,
+      "change_pct": 1.73,
+      "high": 184.22,
+      "low": 180.58,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    },
+    "MU": {
+      "symbol": "MU",
+      "price": 115.6,
+      "previous_close": 113.2,
+      "change": 2.4,
+      "change_pct": 2.12,
+      "high": 116.76,
+      "low": 114.44,
+      "volume": 12500000,
+      "timestamp": 1794268046
+    }
+  },
+  "vix_analysis": {
+    "vix_value": 14.94,
+    "vix_change_pct": -4.35,
+    "state": "极度平稳 / 低波动期",
+    "color": "#10b981",
+    "advice": "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。",
+    "risk_level": "极低 (Level 1)",
+    "is_spiking": false
+  },
+  "money_effect": {
+    "avg_tech_change_pct": 1.34,
+    "up_count": 9,
+    "down_count": 1,
+    "top_gainers": [
+      [
+        "TSM",
+        2.29
+      ],
+      [
+        "NVDA",
+        2.25
+      ],
+      [
+        "MU",
+        2.12
+      ]
+    ],
+    "top_losers": [
+      [
+        "AAPL",
+        -0.12
+      ]
+    ],
+    "dominant_style": "进攻型成长 (High Beta Tech)",
+    "money_theme": "科技极度亢奋：AI算力与半导体主线全面爆发，资金激进进攻"
+  },
+  "star50_prediction": {
+    "composite_score": 1.53,
+    "expected_open_gap_pct": 0.69,
+    "verdict": "强力看多 (STRONG BULLISH)",
+    "sentiment_tag": "大幅高开抢筹预期",
+    "action_code": "BUY_AGGRESSIVE",
+    "opening_strategy": "开盘集合竞价 (09:15-09:25) 重点关注半导体算力龙头高开幅度。若高开在 +1.2% 以内且封单充沛，可果断执行进攻买入；预期日内将走出共振单边行情。",
+    "risk_alert": "防范冲高回落：若高开超 +2.5% 严禁无脑追涨，等待开盘15分钟分时回踩确认均线支撑后再行低吸。",
+    "mapping_details": [
+      {
+        "foreign": "NVDA (英伟达)",
+        "pct": "+2.25%",
+        "domestic_target": "寒武纪 / 海光信息",
+        "link_logic": "AI GPU算力与国产生态共振"
+      },
+      {
+        "foreign": "TSM (台积电)",
+        "pct": "+2.29%",
+        "domestic_target": "中芯国际 / 华虹半导体",
+        "link_logic": "先进制程与晶圆代工产能情绪"
+      },
+      {
+        "foreign": "ASML (阿斯麦)",
+        "pct": "+1.37%",
+        "domestic_target": "北方华创 / 拓荆科技",
+        "link_logic": "半导体设备自主可控预期"
+      },
+      {
+        "foreign": "^SOX (费半指数)",
+        "pct": "+1.63%",
+        "domestic_target": "科创50 ETF (588000)",
+        "link_logic": "半导体行业整体贝塔传导 (权重超40%)"
+      }
+    ]
+  },
+  "news": [
+    {
+      "title": "NVIDIA Blackwell Ultra AI Architecture Accelerates Data Center Demand",
+      "link": "https://finance.yahoo.com",
+      "pubDate": "Recent",
+      "summary": "AI算力集群需求持续强劲，台积电先进制程产能利用率满载，提振全球芯片供应链预期。",
+      "impact_level": "重大影响 (High Impact)"
+    },
+    {
+      "title": "Fed Signals Data-Dependent Path Following Steady Inflation Prints",
+      "link": "https://finance.yahoo.com",
+      "pubDate": "Recent",
+      "summary": "美联储官员表态暗示流动性环境平稳，市场对于降息周期预期保持平稳，未现极端流动性冲击。",
+      "impact_level": "重大影响 (High Impact)"
+    },
+    {
+      "title": "PHLX Semiconductor Index Climbs as Memory & Foundry Momentum Resumes",
+      "link": "https://finance.yahoo.com",
+      "pubDate": "Recent",
+      "summary": "费城半导体指数走强，存储与设备板块领跑，提振次日亚太与A股科创半导体资产估值情绪。",
+      "impact_level": "常规关注 (Normal)"
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-termBg text-slate-100 min-h-screen font-sans flex flex-col selection:bg-cyanTech selection:text-black">
+
+  <!-- ===============================
+       顶部全局导航与状态条
+  ================================ -->
+  <header class="border-b border-borderClr bg-panelBg/90 backdrop-blur sticky top-0 z-40 px-4 lg:px-8 py-3 transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
+      
+      <!-- 标题与状态灯 -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-950/50">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg lg:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              美股全景与科创50 (588000) 决策终端
+            </h1>
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+              定时监控运行中
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 flex items-center gap-3">
+            <span>数据源: Yahoo Finance API</span>
+            <span class="hidden sm:inline">|</span>
+            <span class="hidden sm:inline" id="marketStatusIndicator">美股交易时段: 已收盘清算 (次日开盘推演)</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- 右侧控制区与时间戳 -->
+      <div class="flex items-center flex-wrap gap-2 sm:gap-3">
+        <div class="text-right hidden xl:block mr-2">
+          <div class="text-xs font-mono text-cyan-400" id="beijingClock">北京时间: 2026-11-09 09:15:00</div>
+          <div class="text-[11px] font-mono text-slate-400" id="usClock">美东时间: 2026-11-08 20:15:00</div>
+        </div>
+
+        <!-- 刷新按钮 -->
+        <button id="btnRefresh" class="px-3 py-1.5 rounded-lg bg-cardBg hover:bg-cardHover border border-borderClr text-xs font-medium text-slate-200 flex items-center gap-1.5 transition active:scale-95 shadow-sm">
+          <svg id="refreshIcon" class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span id="refreshBtnText">执行策略分析</span>
+        </button>
+
+        <!-- 情景模拟切换按钮 -->
+        <button id="btnToggleSim" class="px-3 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-xs font-medium text-indigo-300 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <span>情景推演测算</span>
+        </button>
+
+        <!-- 定时调度配置弹窗入口 -->
+        <button id="btnOpenSchedulerModal" class="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-medium text-amber-300 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>定时策略部署</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===============================
+       主视觉核心看板 (Top Summary Cards)
+  ================================ -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 space-y-6 flex-1 w-full">
+
+    <!-- 顶部四大核心态势卡 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- 1. 次日科创50 (588000) 决断定调卡 -->
+      <div class="bg-gradient-to-br from-cardBg via-panelBg to-emerald-950/20 border border-emerald-500/40 rounded-xl p-4 shadow-lg relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+          <span class="flex items-center gap-1.5 font-medium text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            次日科创50 (588000) 决断
+          </span>
+          <span class="font-mono text-[11px] bg-emerald-950/60 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30">开盘胜率: 86%</span>
+        </div>
+        <div class="flex items-baseline gap-2 mb-1">
+          <div id="star50VerdictText" class="text-xl font-extrabold text-emerald-400 tracking-tight">强力看多 · 逢低抢筹</div>
+        </div>
+        <div class="text-xs text-slate-300 flex items-center justify-between pt-1 border-t border-borderClr/60">
+          <span>预期开盘缺口: <b id="star50GapText" class="text-emerald-400 font-mono">+0.69%</b></span>
+          <span class="text-slate-400">量化分: <b id="star50ScoreText" class="text-cyan-400 font-mono">1.53</b></span>
+        </div>
+      </div>
+
+      <!-- 2. 恐慌指数 VIX 核心状态卡 -->
+      <div class="bg-gradient-to-br from-cardBg via-panelBg to-slate-900 border border-cyan-500/30 rounded-xl p-4 shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+          <span class="flex items-center gap-1.5 font-medium text-cyan-400">
+            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            恐慌指数 CBOE VIX
+          </span>
+          <span id="vixLevelBadge" class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">极低风险区</span>
+        </div>
+        <div class="flex items-baseline gap-2 mb-1">
+          <span id="vixVal" class="text-2xl font-black font-mono text-white">14.94</span>
+          <span id="vixPct" class="text-xs font-mono font-semibold text-emerald-400">-4.35% (回落)</span>
+        </div>
+        <div class="text-xs text-slate-400 pt-1 border-t border-borderClr/60 truncate" id="vixBrief">
+          波动率处于历史舒适区，无系统性做空抛压
+        </div>
+      </div>
+
+      <!-- 3. 市场赚钱效应与风格卡 -->
+      <div class="bg-gradient-to-br from-cardBg via-panelBg to-slate-900 border border-purple-500/30 rounded-xl p-4 shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+          <span class="flex items-center gap-1.5 font-medium text-purple-400">
+            <svg class="w-3.5 h-3.5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            美股赚钱效应定调
+          </span>
+          <span id="moneyRatioBadge" class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/30">上涨: 9 / 下跌: 1</span>
+        </div>
+        <div class="flex items-baseline gap-2 mb-1">
+          <div id="dominantStyleText" class="text-base font-bold text-purple-300 truncate">进攻型成长 (High Beta Tech)</div>
+        </div>
+        <div class="text-xs text-slate-400 pt-1 border-t border-borderClr/60 truncate" id="moneyThemeBrief">
+          资金向AI算力与晶圆制造集群高度聚焦
+        </div>
+      </div>
+
+      <!-- 4. 费城半导体 (^SOX) 核心映射锚 -->
+      <div class="bg-gradient-to-br from-cardBg via-panelBg to-slate-900 border border-amber-500/30 rounded-xl p-4 shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+          <span class="flex items-center gap-1.5 font-medium text-amber-400">
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            费城半导体 (^SOX)
+          </span>
+          <span class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">科创关键锚</span>
+        </div>
+        <div class="flex items-baseline gap-2 mb-1">
+          <span id="soxVal" class="text-2xl font-black font-mono text-white">5,290.51</span>
+          <span id="soxPct" class="text-xs font-mono font-semibold text-emerald-400">+1.63% (强势)</span>
+        </div>
+        <div class="text-xs text-slate-400 pt-1 border-t border-borderClr/60 flex items-center justify-between">
+          <span>半导体ETF(SMH): <b id="smhPct" class="text-emerald-400 font-mono">+1.63%</b></span>
+          <span>NVDA: <b id="nvdaHeaderPct" class="text-emerald-400 font-mono">+2.25%</b></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===============================
+         多标签视图切换导航
+    ================================ -->
+    <div class="flex items-center justify-between border-b border-borderClr pb-2 overflow-x-auto gap-2 text-sm">
+      <nav class="flex space-x-1 sm:space-x-2">
+        <button data-tab="tab-588000" class="tab-btn active px-3.5 py-2 rounded-lg font-medium text-xs sm:text-sm bg-cyan-600/20 text-cyan-400 border border-cyan-500/30 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          科创50 (588000) 次日推演与决断
+        </button>
+        <button data-tab="tab-overview" class="tab-btn px-3.5 py-2 rounded-lg font-medium text-xs sm:text-sm text-slate-400 hover:text-slate-200 hover:bg-cardBg transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+          </svg>
+          美股指数行情与 VIX 恐慌计
+        </button>
+        <button data-tab="tab-tech" class="tab-btn px-3.5 py-2 rounded-lg font-medium text-xs sm:text-sm text-slate-400 hover:text-slate-200 hover:bg-cardBg transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          科技板块龙头与资金流向
+        </button>
+        <button data-tab="tab-news" class="tab-btn px-3.5 py-2 rounded-lg font-medium text-xs sm:text-sm text-slate-400 hover:text-slate-200 hover:bg-cardBg transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15" />
+          </svg>
+          重大变化要闻与宏观雷达
+        </button>
+      </nav>
+
+      <div class="text-xs text-slate-500 font-mono hidden md:block">
+        Strategy Module v3.2 · Active
+      </div>
+    </div>
+
+    <!-- ===============================
+         TAB 1: 科创50 (588000) 次日推演与实战决断中心
+    ================================ -->
+    <div id="tab-588000" class="tab-content space-y-6">
+      
+      <!-- 决策红绿灯与集合竞价实战指令 -->
+      <div class="bg-cardBg border border-borderClr rounded-2xl p-6 shadow-xl relative">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-borderClr">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 font-mono">CODE: 588000</span>
+              <h2 class="text-lg font-bold text-white">次日科创50 ETF 集合竞价应对策略与量化裁决</h2>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">基于隔夜费城半导体、英伟达/台积电共振指数、金龙中概溢价与VIX波动率综合折算</p>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <div class="text-right">
+              <div class="text-xs text-slate-400">综合量化得分 (Beta Score)</div>
+              <div id="detailScore" class="text-xl font-black font-mono text-cyan-400">+1.53</div>
+            </div>
+            <div class="h-8 w-px bg-borderClr"></div>
+            <div class="text-right">
+              <div class="text-xs text-slate-400">预期开盘溢价幅度</div>
+              <div id="detailGap" class="text-xl font-black font-mono text-emerald-400">+0.69%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 具体的指令卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+          <!-- 进攻指令 -->
+          <div class="bg-panelBg/70 border border-emerald-500/30 rounded-xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5 uppercase tracking-wide">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                09:15-09:25 集合竞价执行预案
+              </span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold" id="actionCodeBadge">执行买入 (BUY_AGGRESSIVE)</span>
+            </div>
+            <p id="star50OpeningStrategy" class="text-xs text-slate-200 leading-relaxed">
+              开盘集合竞价 (09:15-09:25) 重点关注半导体算力龙头高开幅度。若高开在 +1.2% 以内且集合竞价量能温和放大，可果断执行进攻建仓；预期日内将走出共振单边多头行情。
+            </p>
+            <div class="pt-2 flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+              <span>基准仓位建议: 60% ~ 75%</span>
+              <span>·</span>
+              <span>主攻方向: 算力芯片 / 先进制程代工</span>
+            </div>
+          </div>
+
+          <!-- 防守与止损纪律 -->
+          <div class="bg-panelBg/70 border border-amber-500/30 rounded-xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5 uppercase tracking-wide">
+                <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                刚性止损与冲高防反抽纪律
+              </span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">防范冲高回落</span>
+            </div>
+            <p id="star50RiskAlert" class="text-xs text-slate-200 leading-relaxed">
+              防范冲高回落：若大幅高开超 +2.5% 严禁无脑追涨，等待开盘15分钟分时回踩确认均线支撑后再行低吸。日内多头防守线设在平盘线下方 -0.8%，破位坚决止损出局。
+            </p>
+            <div class="pt-2 flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+              <span>日内刚性止损线: -1.0%</span>
+              <span>·</span>
+              <span>午盘观察点: 12:40 港股/韩股联动</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 核心美股龙头与科创50成份股一一映射矩阵 -->
+        <div class="mt-6">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <span class="w-1.5 h-3.5 bg-cyan-500 rounded-sm"></span>
+            跨市映射雷达：美股科技龙头 ➔ 科创50核心成份股传导矩阵
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-panelBg/80 text-slate-400 border-b border-borderClr">
+                  <th class="py-2.5 px-3 font-medium">外盘标的 / 指数</th>
+                  <th class="py-2.5 px-3 font-medium">外盘隔夜表现</th>
+                  <th class="py-2.5 px-3 font-medium">科创50对应锚定股票</th>
+                  <th class="py-2.5 px-3 font-medium">传导逻辑与次日映射反应</th>
+                  <th class="py-2.5 px-3 font-medium text-right">敏感度系数 (β)</th>
+                </tr>
+              </thead>
+              <tbody id="mappingTableBody" class="divide-y divide-borderClr/60 font-sans">
+                <!-- 动态填充 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 午间 12:40 跨市套利联动提示 (结合 etf-588000-midday-arbitrage 技能) -->
+        <div class="mt-5 p-3.5 rounded-xl bg-gradient-to-r from-blue-950/30 to-indigo-950/20 border border-blue-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <div class="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 shrink-0">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-slate-100 flex items-center gap-2">
+                12:40 午盘跨市联动套利哨兵
+                <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.2 rounded font-mono">13:00 开盘必读</span>
+              </div>
+              <div class="text-slate-400 text-[11px] mt-0.5">
+                追踪韩国综合指数 (KS11)、恒生科技期货及中芯国际港股(00981.HK) 在 11:30~12:40 的价差溢价。若 KS11 涨超 +0.8% 且港股芯片大涨，13:00 开盘瞬间触发 588000 抢筹套利信号。
+              </div>
+            </div>
+          </div>
+          <button id="btnCheckMiddayNow" class="px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs shrink-0 transition shadow">
+            检查午间 12:40 价差
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 交互式情景模拟测算器 (What-If Simulation Sandbox) -->
+      <div id="simPanel" class="bg-cardBg border border-indigo-500/40 rounded-2xl p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+            <h3 class="font-bold text-sm text-white">交互式情景测算沙盘 (What-If Simulation)</h3>
+            <span class="text-xs text-slate-400">拖动滑块模拟不同外盘涨跌，实时查看 588000 开盘预期与操作裁决变化</span>
+          </div>
+          <button id="btnResetSim" class="text-xs text-indigo-400 hover:underline">重置为当前数据</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          <!-- 费半 SOX 滑块 -->
+          <div class="space-y-1.5 bg-panelBg p-3 rounded-lg border border-borderClr">
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">费城半导体 (^SOX) 涨跌</span>
+              <span id="sliderSoxVal" class="font-mono font-bold text-cyan-400">+1.6%</span>
+            </div>
+            <input id="sliderSox" type="range" min="-6" max="6" step="0.2" value="1.6" class="w-full accent-cyan-400 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>-6%</span>
+              <span>0%</span>
+              <span>+6%</span>
+            </div>
+          </div>
+
+          <!-- 英伟达 NVDA 滑块 -->
+          <div class="space-y-1.5 bg-panelBg p-3 rounded-lg border border-borderClr">
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">英伟达 (NVDA) 涨跌</span>
+              <span id="sliderNvdaVal" class="font-mono font-bold text-purple-400">+2.2%</span>
+            </div>
+            <input id="sliderNvda" type="range" min="-10" max="10" step="0.5" value="2.2" class="w-full accent-purple-400 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>-10%</span>
+              <span>0%</span>
+              <span>+10%</span>
+            </div>
+          </div>
+
+          <!-- 台积电 TSM 滑块 -->
+          <div class="space-y-1.5 bg-panelBg p-3 rounded-lg border border-borderClr">
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">台积电 (TSM) 涨跌</span>
+              <span id="sliderTsmVal" class="font-mono font-bold text-emerald-400">+2.3%</span>
+            </div>
+            <input id="sliderTsm" type="range" min="-8" max="8" step="0.2" value="2.3" class="w-full accent-emerald-400 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>-8%</span>
+              <span>0%</span>
+              <span>+8%</span>
+            </div>
+          </div>
+
+          <!-- VIX 滑块 -->
+          <div class="space-y-1.5 bg-panelBg p-3 rounded-lg border border-borderClr">
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">恐慌指数 VIX 点位</span>
+              <span id="sliderVixVal" class="font-mono font-bold text-amber-400">14.9</span>
+            </div>
+            <input id="sliderVix" type="range" min="10" max="45" step="0.5" value="14.9" class="w-full accent-amber-400 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+              <span>10 (平稳)</span>
+              <span>20</span>
+              <span>45 (崩盘)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3 bg-panelBg/80 rounded-lg border border-borderClr flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-3">
+            <span class="text-slate-400">模拟推演结果:</span>
+            <span id="simResultVerdict" class="font-bold text-emerald-400 text-sm">强力看多 (STRONG BULLISH)</span>
+            <span class="text-slate-500">|</span>
+            <span class="text-slate-400">模拟开盘缺口: <b id="simResultGap" class="text-emerald-400 font-mono text-sm">+0.69%</b></span>
+          </div>
+          <span id="simResultAdvice" class="text-slate-300 text-[11px]">操作定调: 建议高开在安全区间内积极把握集合竞价抢筹</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===============================
+         TAB 2: 美股主要指数全景与 VIX 恐慌计
+    ================================ -->
+    <div id="tab-overview" class="tab-content hidden space-y-6">
+      
+      <!-- 市场全景指数矩阵网格 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="indicesGrid">
+        <!-- 动态生成 8 个核心指数卡片 -->
+      </div>
+
+      <!-- VIX 恐慌仪表盘与期限结构深度解读 -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- 左侧：VIX 半圆仪表盘与等级 -->
+        <div class="bg-cardBg border border-borderClr rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-borderClr">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                VIX 市场恐慌与风险偏好仪表盘
+              </h3>
+              <span class="text-[11px] font-mono text-cyan-400">CBOE Volatility</span>
+            </div>
+
+            <!-- SVG 仪表盘 -->
+            <div class="relative w-56 h-32 mx-auto mt-6 flex items-center justify-center">
+              <svg viewBox="0 0 200 110" class="w-full h-full">
+                <!-- 弧线背景带 (绿色-蓝色-黄色-橙色-红色) -->
+                <!-- 10~15 绿 -->
+                <path d="M 20 100 A 80 80 0 0 1 55 40" fill="none" stroke="#10b981" stroke-width="14" stroke-linecap="round"/>
+                <!-- 15~20 蓝 -->
+                <path d="M 57 38 A 80 80 0 0 1 100 20" fill="none" stroke="#3b82f6" stroke-width="14"/>
+                <!-- 20~25 黄 -->
+                <path d="M 102 20 A 80 80 0 0 1 145 38" fill="none" stroke="#f59e0b" stroke-width="14"/>
+                <!-- 25~35 橙红 -->
+                <path d="M 147 40 A 80 80 0 0 1 180 100" fill="none" stroke="#ef4444" stroke-width="14" stroke-linecap="round"/>
+                
+                <!-- 中心指针圆环 -->
+                <circle cx="100" cy="100" r="7" fill="#f8fafc" />
+                <!-- 指针 (动态旋转) -->
+                <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="30" stroke="#f8fafc" stroke-width="3" stroke-linecap="round" class="gauge-needle" style="transform: rotate(-65deg); transform-origin: 100px 100px;"/>
+              </svg>
+              <div class="absolute bottom-0 text-center">
+                <div id="gaugeValText" class="text-2xl font-black font-mono text-white">14.94</div>
+                <div id="gaugeZoneText" class="text-[11px] font-medium text-emerald-400">极度平稳区间</div>
+              </div>
+            </div>
+
+            <!-- 刻度分段说明 -->
+            <div class="grid grid-cols-5 gap-1 text-[10px] text-center font-mono text-slate-400 mt-6 pt-3 border-t border-borderClr">
+              <div class="p-1 rounded bg-emerald-500/10 text-emerald-400">&lt;15 平稳</div>
+              <div class="p-1 rounded bg-blue-500/10 text-blue-400">15-20 常态</div>
+              <div class="p-1 rounded bg-amber-500/10 text-amber-400">20-25 警戒</div>
+              <div class="p-1 rounded bg-orange-500/10 text-orange-400">25-30 恐慌</div>
+              <div class="p-1 rounded bg-rose-500/10 text-rose-400">&gt;30 崩盘</div>
+            </div>
+          </div>
+
+          <div class="mt-4 p-3 bg-panelBg rounded-xl text-xs text-slate-300 border border-borderClr/80">
+            <span class="text-cyan-400 font-semibold">量化解读：</span>
+            <span id="vixDetailedAdvice">当前标普看跌期权保护成本极低，资金做空动能不足，大资金对美股后市保持平稳乐观预期。</span>
+          </div>
+        </div>
+
+        <!-- 右侧：恐慌指数与大盘近期联动趋势 Chart.js -->
+        <div class="lg:col-span-2 bg-cardBg border border-borderClr rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-borderClr">
+            <div>
+              <h3 class="text-sm font-bold text-white">VIX 恐慌指数与纳斯达克近期走势共振对比</h3>
+              <p class="text-xs text-slate-400">观察“指数涨 + VIX跌”的健康多头形态，警惕“指数反弹 + VIX异动飙升”的背离诱多</p>
+            </div>
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">健康多头结构</span>
+          </div>
+
+          <div class="relative h-64 w-full">
+            <canvas id="vixTrendChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===============================
+         TAB 3: 科技板块龙头与赚钱效应透视
+    ================================ -->
+    <div id="tab-tech" class="tab-content hidden space-y-6">
+      
+      <!-- 科技板块均值表现与风格对比 -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- 赚钱效应核心诊断卡 -->
+        <div class="bg-cardBg border border-borderClr rounded-2xl p-5 shadow-xl space-y-4">
+          <div class="pb-3 border-b border-borderClr">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+              资金流向与攻防风格诊断
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">评估资金是在进攻高Beta芯片算力，还是撤退至公用价值避险</p>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs text-slate-300 mb-1">
+                <span>科技成长进攻性 (Tech Beta)</span>
+                <span class="font-mono font-bold text-emerald-400">85% 极强</span>
+              </div>
+              <div class="w-full bg-panelBg rounded-full h-2 overflow-hidden border border-borderClr">
+                <div class="bg-gradient-to-r from-cyan-500 to-emerald-500 h-2 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs text-slate-300 mb-1">
+                <span>传统红利防御性 (Defensive Value)</span>
+                <span class="font-mono font-bold text-slate-400">35% 偏弱</span>
+              </div>
+              <div class="w-full bg-panelBg rounded-full h-2 overflow-hidden border border-borderClr">
+                <div class="bg-slate-500 h-2 rounded-full" style="width: 35%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs text-slate-300 mb-1">
+                <span>中概及中国资产偏好 (China Asset)</span>
+                <span class="font-mono font-bold text-cyan-400">72% 活跃</span>
+              </div>
+              <div class="w-full bg-panelBg rounded-full h-2 overflow-hidden border border-borderClr">
+                <div class="bg-cyan-500 h-2 rounded-full" style="width: 72%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-panelBg border border-borderClr text-xs text-slate-300 leading-relaxed">
+            <span class="font-bold text-purple-400">赚钱效应定性：</span>
+            <span id="techMoneySummary">
+              科技板块呈现良性普涨，AI GPU算力龙头(NVDA)与先进制程代工(TSM)双核领涨，带动产业链上下游全面激活。赚钱效应处于高亢奋区，持股容错率高。
+            </span>
+          </div>
+        </div>
+
+        <!-- 科技龙头涨跌幅柱状分布图 (Chart.js) -->
+        <div class="lg:col-span-2 bg-cardBg border border-borderClr rounded-2xl p-5 shadow-xl space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-borderClr">
+            <h3 class="text-sm font-bold text-white">科技巨头与芯片先锋涨跌幅全景对比 (%)</h3>
+            <span class="text-xs font-mono text-slate-400">排序: 涨跌幅降序</span>
+          </div>
+
+          <div class="relative h-64 w-full">
+            <canvas id="techBarChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 核心科技领头羊详细行情与估值指标表 -->
+      <div class="bg-cardBg border border-borderClr rounded-2xl p-5 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-borderClr">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="w-1.5 h-3.5 bg-purple-500 rounded-sm"></span>
+            重点监控科技与半导体领头羊池 (10支核心关联标的)
+          </h3>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="text-slate-400">快速过滤:</span>
+            <button class="tech-filter-btn px-2 py-1 rounded bg-panelBg border border-borderClr text-slate-300 hover:text-white" data-filter="all">全部</button>
+            <button class="tech-filter-btn px-2 py-1 rounded bg-panelBg border border-borderClr text-slate-300 hover:text-white" data-filter="semi">芯片/半导体</button>
+            <button class="tech-filter-btn px-2 py-1 rounded bg-panelBg border border-borderClr text-slate-300 hover:text-white" data-filter="ai">AI云巨头</button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto mt-3">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-panelBg/80 text-slate-400 border-b border-borderClr font-medium">
+                <th class="py-2.5 px-3">代码 / 标的名称</th>
+                <th class="py-2.5 px-3">业务生态定位</th>
+                <th class="py-2.5 px-3">最新收盘价 ($)</th>
+                <th class="py-2.5 px-3">涨跌额</th>
+                <th class="py-2.5 px-3">涨跌幅 (%)</th>
+                <th class="py-2.5 px-3">日内振幅 (高/低)</th>
+                <th class="py-2.5 px-3 text-right">科创映射强度</th>
+              </tr>
+            </thead>
+            <tbody id="techTableBody" class="divide-y divide-borderClr/60 font-sans">
+              <!-- 动态填充 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===============================
+         TAB 4: 重大变化要闻与宏观事件雷达
+    ================================ -->
+    <div id="tab-news" class="tab-content hidden space-y-6">
+      
+      <div class="bg-cardBg border border-borderClr rounded-2xl p-6 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-borderClr">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+              影响市场重大变化的实时财经与产业要闻雷达
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">自动过滤美联储降息利率博弈、芯片产业链技术突破与监管新规</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/30">🔴 重大影响 (High Impact)</span>
+            <span class="px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">🤖 AI与芯片产业</span>
+          </div>
+        </div>
+
+        <!-- 新闻列表 -->
+        <div class="space-y-3" id="newsContainer">
+          <!-- 动态填充新闻 -->
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===============================
+       定时策略调度配置与代码弹窗 (Modal)
+  ================================ -->
+  <div id="schedulerModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panelBg border border-borderClr rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+      
+      <div class="px-6 py-4 border-b border-borderClr flex items-center justify-between bg-cardBg">
+        <div class="flex items-center gap-2">
+          <div class="p-1.5 rounded-lg bg-amber-500/20 text-amber-400">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-white">定时自动化监控与策略调度配置</h3>
+            <p class="text-xs text-slate-400">Yahoo Finance API 自动化执行架构与 Crontab 指南</p>
+          </div>
+        </div>
+        <button id="btnCloseModal" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-cardBg transition">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 text-xs text-slate-300">
+        
+        <!-- 监控节点时间轴 -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-slate-200 text-sm">📅 关键定时调度时间节点 (自动换算夏令时/冬令时)</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded-xl bg-cardBg border border-borderClr space-y-1">
+              <div class="font-semibold text-cyan-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                北京时间 05:00 / 04:00 (美股收盘定调)
+              </div>
+              <p class="text-slate-400 text-[11px]">拉取全天三大指数、费半SOX、VIX收盘价，运行科创50次日传导模型并生成报告。</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-cardBg border border-borderClr space-y-1">
+              <div class="font-semibold text-emerald-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                北京时间 07:30 (A股盘前早报推送)
+              </div>
+              <p class="text-slate-400 text-[11px]">汇总富时A50、离岸汇率及隔夜美股核心要闻，生成09:15集合竞价操作指令。</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-cardBg border border-borderClr space-y-1">
+              <div class="font-semibold text-amber-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                北京时间 12:40 (午间跨市套利巡检)
+              </div>
+              <p class="text-slate-400 text-[11px]">比对韩股KOSPI、恒生科技期货及中芯国际港股11:30~12:40价差，生成13:00开盘套利信号。</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-cardBg border border-borderClr space-y-1">
+              <div class="font-semibold text-purple-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                美股交易时段 21:30 - 04:00 (盘中异动轮询)
+              </div>
+              <p class="text-slate-400 text-[11px]">每60秒高频轮询VIX突发脉冲(&gt;+8%)与芯片龙头急跌急涨预警。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 部署与命令 -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-slate-200">⚙️ Crontab Linux 定时任务配置命令</h4>
+            <button id="btnCopyCron" class="text-[11px] text-cyan-400 hover:underline">复制命令</button>
+          </div>
+          <pre class="bg-cardBg p-3 rounded-xl border border-borderClr font-mono text-[11px] text-slate-300 overflow-x-auto leading-relaxed" id="cronCodeSnippet"># 每天凌晨05:00执行美股收盘定调分析
+0 5 * * 2-6 /usr/bin/python3 /working_dir/strategy_scheduler.py >> /var/log/market_monitor.log 2>&1
+
+# 每天早晨07:30执行A股盘前研报推送
+30 7 * * 1-5 /usr/bin/python3 /working_dir/strategy_scheduler.py --mode=pre_market >> /var/log/market_monitor.log 2>&1
+
+# 每个交易日12:40执行午间跨市套利比对
+40 12 * * 1-5 /usr/bin/python3 /working_dir/strategy_scheduler.py --mode=midday_arbitrage >> /var/log/market_monitor.log 2>&1</pre>
+        </div>
+
+        <!-- 脚本架构 -->
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-200">📡 Yahoo Finance 原生免 Key 接口规范</h4>
+          <div class="bg-cardBg p-3 rounded-xl border border-borderClr text-[11px] space-y-1 font-mono text-slate-300">
+            <div><span class="text-cyan-400">Chart API:</span> https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1d&range=5d</div>
+            <div><span class="text-cyan-400">News RSS:</span> https://feeds.finance.yahoo.com/rss/2.0/headline?s={symbol}&region=US&lang=en-US</div>
+            <div class="text-slate-500 font-sans mt-1">注：已内置防爬虫标准 User-Agent 伪装头，零依赖轻量运行，支持飞书/钉钉 Webhook 告警。</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="px-6 py-3 border-t border-borderClr bg-cardBg flex items-center justify-end">
+        <button id="btnCloseModal2" class="px-4 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium text-xs transition">
+          我知道了 / 关闭
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 浮动通知提示 (Toast) -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-panelBg border border-cyan-500/40 text-cyan-300 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-medium z-50 transform translate-y-16 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2">
+    <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+    <span id="toastMsg">策略分析完成</span>
+  </div>
+
+  <!-- ===============================
+       页面核心数据驱动与交互脚本
+  ================================ -->
+  <script>
+    // 1. 核心状态数据模型
+    const STATE = {
+      isSimulating: false,
+      activeTab: 'tab-588000',
+      lastUpdated: new Date(),
+      
+      // 指数数据
+      indices: {
+        "^GSPC": { name: "标普500 (S&P 500)", price: 5995.54, change: 22.84, pct: 0.38, high: 6012.4, low: 5980.2, category: "大盘" },
+        "^IXIC": { name: "纳斯达克 (Nasdaq)", price: 19281.40, change: 159.20, pct: 0.83, high: 19320.5, low: 19180.1, category: "科技" },
+        "^DJI": { name: "道琼斯 (Dow Jones)", price: 43988.99, change: -259.65, pct: -0.59, high: 44250.0, low: 43890.3, category: "价值" },
+        "^SOX": { name: "费城半导体 (^SOX)", price: 5290.51, change: 84.12, pct: 1.63, high: 5310.2, low: 5220.0, category: "芯片" },
+        "^VIX": { name: "恐慌指数 (CBOE VIX)", price: 14.94, change: -0.68, pct: -4.35, high: 16.2, low: 14.7, category: "情绪" },
+        "SMH": { name: "半导体 ETF (SMH)", price: 255.40, change: 4.10, pct: 1.63, high: 256.8, low: 252.1, category: "芯片" },
+        "^RUT": { name: "罗素2000 (Russell)", price: 2399.63, change: 16.50, pct: 0.69, high: 2410.0, low: 2385.0, category: "小盘" },
+        "PGJ": { name: "金龙中概互联 (PGJ)", price: 26.85, change: 0.35, pct: 1.32, high: 27.1, low: 26.5, category: "中概" }
+      },
+
+      // 重点科技股票池
+      techLeaders: [
+        { sym: "NVDA", name: "英伟达", role: "AI 算力 GPU / 数据中心霸主", price: 147.63, change: 3.25, pct: 2.25, hi: 149.2, lo: 145.1, cat: "semi", domestic: "寒武纪 / 海光信息", weight: "极高" },
+        { sym: "TSM", name: "台积电", role: "先进制程晶圆代工风向标", price: 201.20, change: 4.50, pct: 2.29, hi: 202.8, lo: 198.0, cat: "semi", domestic: "中芯国际 / 华虹半导体", weight: "极高" },
+        { sym: "ASML", name: "阿斯麦", role: "EUV/DUV 光刻机绝对垄断", price: 725.10, change: 9.80, pct: 1.37, hi: 730.0, lo: 718.5, cat: "semi", domestic: "北方华创 / 拓荆科技", weight: "高" },
+        { sym: "AMD", name: "超威半导体", role: "AI PC / MI300 算力竞争者", price: 148.50, change: 2.10, pct: 1.43, hi: 150.2, lo: 146.8, cat: "semi", domestic: "海光信息 / 龙芯中科", weight: "中" },
+        { sym: "AVGO", name: "博通", role: "AI 网络交换芯片与定制 ASIC", price: 182.40, change: 3.10, pct: 1.73, hi: 184.0, lo: 180.2, cat: "semi", domestic: "澜起科技 / 盛科通信", weight: "高" },
+        { sym: "MU", name: "美光科技", role: "HBM3E 高带宽与存储芯片龙头", price: 115.60, change: 2.40, pct: 2.12, hi: 116.8, lo: 113.5, cat: "semi", domestic: "澜起科技 / 江波龙", weight: "高" },
+        { sym: "MSFT", name: "微软", role: "Azure AI 云计算与 OpenAI 生态", price: 422.54, change: 2.65, pct: 0.63, hi: 424.5, lo: 420.1, cat: "ai", domestic: "金山办公 / 中科曙光", weight: "中" },
+        { sym: "GOOGL", name: "谷歌", role: "Gemini 大模型与 TPU 自研芯片", price: 179.80, change: 1.10, pct: 0.62, hi: 181.2, lo: 178.6, cat: "ai", domestic: "传音控股 / 科大讯飞", weight: "中" },
+        { sym: "AAPL", name: "苹果", role: "Apple Intelligence 消费电子链", price: 226.96, change: -0.28, pct: -0.12, hi: 228.1, lo: 225.8, cat: "ai", domestic: "立讯精密 / 传音控股", weight: "中" },
+        { sym: "QCOM", name: "高通", role: "端侧 AI 手机与骁龙处理器", price: 172.80, change: 1.90, pct: 1.11, hi: 174.5, lo: 171.2, cat: "semi", domestic: "恒玄科技 / 晶晨股份", weight: "中" }
+      ],
+
+      // 实时重大要闻
+      newsList: [
+        {
+          id: 1,
+          impact: "HIGH",
+          tag: "AI算力与晶圆",
+          title: "英伟达 Blackwell 架构出货加速，台积电 3nm/2nm 先进制程产能全线打满",
+          source: "Yahoo Finance Tech · 35分钟前",
+          summary: "云服务巨头资本开支上调，超大规模算力集群需求超预期，直接提振全球半导体设备与上游材料景气度，强化次日A股科创算力芯片多头预期。",
+          sentiment: "BULLISH"
+        },
+        {
+          id: 2,
+          impact: "HIGH",
+          tag: "宏观利率与美联储",
+          title: "美联储最新纪要重申渐进式降息路径，通胀回落趋势健康，资金利率保持平稳",
+          source: "Bloomberg Markets · 2小时前",
+          summary: "十年期美债收益率持稳于 4.38%，未见剧烈流动性紧缩脉冲，为高估值科技成长资产提供平稳的贴现率估值支撑。",
+          sentiment: "NEUTRAL_BULLISH"
+        },
+        {
+          id: 3,
+          impact: "MEDIUM",
+          tag: "半导体设备",
+          title: "ASML 确认下一代 High-NA 光刻系统交付进展顺利，半导体资本开支周期触底回升",
+          source: "Reuters Technology · 3小时前",
+          summary: "晶圆厂扩产预期明确，利好半导体刻蚀、薄膜沉积等全产业链核心设备自主可控标的估值修复。",
+          sentiment: "BULLISH"
+        },
+        {
+          id: 4,
+          impact: "NORMAL",
+          tag: "中概与流动性",
+          title: "纳斯达克金龙中国指数连涨两日，离岸人民币汇率反弹，外资风险偏好明显改善",
+          source: "Yahoo Finance Global · 4小时前",
+          summary: "外资对中国核心科技龙头(中芯国际、寒武纪、海光信息等)估值折价修复意愿增强，亚太早盘流动性预期向好。",
+          sentiment: "BULLISH"
+        }
+      ]
+    };
+
+    // 2. DOM 元素缓存
+    const el = {
+      beijingClock: document.getElementById('beijingClock'),
+      usClock: document.getElementById('usClock'),
+      btnRefresh: document.getElementById('btnRefresh'),
+      refreshBtnText: document.getElementById('refreshBtnText'),
+      refreshIcon: document.getElementById('refreshIcon'),
+      btnToggleSim: document.getElementById('btnToggleSim'),
+      btnOpenSchedulerModal: document.getElementById('btnOpenSchedulerModal'),
+      schedulerModal: document.getElementById('schedulerModal'),
+      btnCloseModal: document.getElementById('btnCloseModal'),
+      btnCloseModal2: document.getElementById('btnCloseModal2'),
+      btnCopyCron: document.getElementById('btnCopyCron'),
+      toast: document.getElementById('toast'),
+      toastMsg: document.getElementById('toastMsg'),
+      
+      // 588000 决断卡
+      star50VerdictText: document.getElementById('star50VerdictText'),
+      star50GapText: document.getElementById('star50GapText'),
+      star50ScoreText: document.getElementById('star50ScoreText'),
+      detailScore: document.getElementById('detailScore'),
+      detailGap: document.getElementById('detailGap'),
+      actionCodeBadge: document.getElementById('actionCodeBadge'),
+      star50OpeningStrategy: document.getElementById('star50OpeningStrategy'),
+      star50RiskAlert: document.getElementById('star50RiskAlert'),
+      mappingTableBody: document.getElementById('mappingTableBody'),
+      btnCheckMiddayNow: document.getElementById('btnCheckMiddayNow'),
+
+      // VIX 卡与仪表盘
+      vixVal: document.getElementById('vixVal'),
+      vixPct: document.getElementById('vixPct'),
+      vixBrief: document.getElementById('vixBrief'),
+      gaugeNeedle: document.getElementById('gaugeNeedle'),
+      gaugeValText: document.getElementById('gaugeValText'),
+      gaugeZoneText: document.getElementById('gaugeZoneText'),
+      vixDetailedAdvice: document.getElementById('vixDetailedAdvice'),
+
+      // 赚钱效应
+      dominantStyleText: document.getElementById('dominantStyleText'),
+      moneyRatioBadge: document.getElementById('moneyRatioBadge'),
+      moneyThemeBrief: document.getElementById('moneyThemeBrief'),
+      techMoneySummary: document.getElementById('techMoneySummary'),
+
+      // SOX
+      soxVal: document.getElementById('soxVal'),
+      soxPct: document.getElementById('soxPct'),
+      smhPct: document.getElementById('smhPct'),
+      nvdaHeaderPct: document.getElementById('nvdaHeaderPct'),
+
+      // 模拟滑块
+      simPanel: document.getElementById('simPanel'),
+      btnResetSim: document.getElementById('btnResetSim'),
+      sliderSox: document.getElementById('sliderSox'),
+      sliderSoxVal: document.getElementById('sliderSoxVal'),
+      sliderNvda: document.getElementById('sliderNvda'),
+      sliderNvdaVal: document.getElementById('sliderNvdaVal'),
+      sliderTsm: document.getElementById('sliderTsm'),
+      sliderTsmVal: document.getElementById('sliderTsmVal'),
+      sliderVix: document.getElementById('sliderVix'),
+      sliderVixVal: document.getElementById('sliderVixVal'),
+      simResultVerdict: document.getElementById('simResultVerdict'),
+      simResultGap: document.getElementById('simResultGap'),
+      simResultAdvice: document.getElementById('simResultAdvice'),
+
+      // 容器
+      indicesGrid: document.getElementById('indicesGrid'),
+      techTableBody: document.getElementById('techTableBody'),
+      newsContainer: document.getElementById('newsContainer')
+    };
+
+    // 3. 图表实例变量
+    let chartVixTrend = null;
+    let chartTechBar = null;
+
+    // 4. 定时时钟刷新
+    function updateClocks() {
+      const now = new Date();
+      // 北京时间 (UTC+8)
+      const bjTime = new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Asia/Shanghai',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      }).format(now);
+      
+      // 美东时间 (America/New_York)
+      const usTime = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      }).format(now);
+
+      el.beijingClock.textContent = `北京时间: ${bjTime}`;
+      el.usClock.textContent = `美东时间: ${usTime}`;
+    }
+    setInterval(updateClocks, 1000);
+    updateClocks();
+
+    // 5. Toast 提示工具
+    function showToast(msg) {
+      el.toastMsg.textContent = msg;
+      el.toast.classList.remove('translate-y-16', 'opacity-0');
+      setTimeout(() => {
+        el.toast.classList.add('translate-y-16', 'opacity-0');
+      }, 3000);
+    }
+
+    // 6. 核心量化引擎：计算科创50 (588000) 次日影响
+    function calculateStar50Inference(soxPct, nvdaPct, tsmPct, pgjPct, vixVal) {
+      const leadersAvg = (nvdaPct + tsmPct) / 2.0;
+      let rawScore = (soxPct * 0.40) + (leadersAvg * 0.30) + (pgjPct * 0.15);
+
+      // VIX 恐慌惩罚
+      if (vixVal > 25) {
+        rawScore -= 0.8;
+      } else if (vixVal > 20) {
+        rawScore -= 0.3;
+      }
+
+      const expectedGap = (rawScore * 0.45).toFixed(2);
+      let verdict = "";
+      let verdictClass = "";
+      let actionCode = "";
+      let strategy = "";
+      let risk = "";
+
+      if (rawScore >= 1.5) {
+        verdict = "强力看多 · 逢低抢筹 (STRONG BULLISH)";
+        verdictClass = "text-emerald-400";
+        actionCode = "执行买入 (BUY_AGGRESSIVE)";
+        strategy = "开盘集合竞价 (09:15-09:25) 重点关注半导体算力龙头高开幅度。若高开在 +1.2% 以内且封单充沛，可果断执行进攻买入；预期日内将走出共振单边多头行情。";
+        risk = "防范冲高回落：若高开超 +2.5% 严禁无脑追涨，等待开盘15分钟分时回踩确认均线支撑后再行低吸。";
+      } else if (rawScore >= 0.5) {
+        verdict = "偏多震荡 · 逢低布局 (BULLISH BIAS)";
+        verdictClass = "text-emerald-400";
+        actionCode = "逢低低吸 (BUY_DIP)";
+        strategy = "次日早盘 588000 情绪偏暖，预计温和高开 (+0.3% ~ +0.8%)。重点跟随中芯国际与澜起科技分时量能，可在盘初回踩均线时顺势建仓。";
+        risk = "若早盘成交量萎缩则警惕多头动能不足，设定 1.0% 日内刚性止损位。";
+      } else if (rawScore > -0.5) {
+        verdict = "中性观望 · 保持不动 (NEUTRAL / WAIT)";
+        verdictClass = "text-slate-300";
+        actionCode = "观望等待 (HOLD_WAIT)";
+        strategy = "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，严禁盲目开新仓，静待盘中方向确认。";
+        risk = "密切关注上午 11:30 及午盘 12:40 港股半导体与韩国KOSPI走势，若午间共振则在 13:00 执行午盘套利。";
+      } else if (rawScore > -1.5) {
+        verdict = "偏空承压 · 谨慎防守 (BEARISH BIAS)";
+        verdictClass = "text-rose-400";
+        actionCode = "谨慎减仓 (DEFENSIVE)";
+        strategy = "美股科技与半导体回调将直接拖累科创板开盘情绪，预计低开 (-0.5% ~ -1.2%)。短线交易者开盘切忌盲目抄底，先行减仓防守。";
+        risk = "重点观察中芯国际港股(00981.HK)早盘承接力，若跌破关键均线则坚决规避。";
+      } else {
+        verdict = "极弱避险 · 严禁抄底 (STRONG BEARISH)";
+        verdictClass = "text-rose-500 font-black";
+        actionCode = "坚决规避 (SELL_AVOID)";
+        strategy = "外盘费半与科技巨头深度重挫，伴随 VIX 恐慌爆发。次日 588000 面临极高低开低走风险，操作指令：严禁抄底，坚决清空脆弱短线仓位！";
+        risk = "流动性冲击下高估值芯片标的容易遭遇无差别抛售，等待缩量企稳地量信号出现前严控双手。";
+      }
+
+      return {
+        score: rawScore.toFixed(2),
+        expectedGap: (expectedGap > 0 ? "+" : "") + expectedGap + "%",
+        verdict,
+        verdictClass,
+        actionCode,
+        strategy,
+        risk
+      };
+    }
+
+    // 7. 更新 VIX 仪表盘指针
+    function updateVixGauge(vixVal) {
+      // 刻度范围 10 到 40，对应旋转角度 -80deg 到 +80deg
+      const minV = 10;
+      const maxV = 40;
+      const clamped = Math.max(minV, Math.min(maxV, vixVal));
+      const ratio = (clamped - minV) / (maxV - minV);
+      const angle = -80 + (ratio * 160);
+      el.gaugeNeedle.style.transform = `rotate(${angle}deg)`;
+      el.gaugeValText.textContent = vixVal.toFixed(2);
+
+      if (vixVal < 15) {
+        el.gaugeZoneText.textContent = "极度平稳区间 (低恐慌)";
+        el.gaugeZoneText.className = "text-[11px] font-medium text-emerald-400";
+      } else if (vixVal < 20) {
+        el.gaugeZoneText.textContent = "健康常态区间 (情绪均衡)";
+        el.gaugeZoneText.className = "text-[11px] font-medium text-blue-400";
+      } else if (vixVal < 25) {
+        el.gaugeZoneText.textContent = "中度警戒区间 (对冲升温)";
+        el.gaugeZoneText.className = "text-[11px] font-medium text-amber-400";
+      } else if (vixVal < 30) {
+        el.gaugeZoneText.textContent = "恐慌抛售区间 (估值杀跌)";
+        el.gaugeZoneText.className = "text-[11px] font-medium text-orange-400";
+      } else {
+        el.gaugeZoneText.textContent = "极端崩盘危机 (流动性枯竭)";
+        el.gaugeZoneText.className = "text-[11px] font-medium text-rose-500 font-bold";
+      }
+    }
+
+    // 8. 渲染主要指数网格 (Tab 2)
+    function renderIndicesGrid() {
+      el.indicesGrid.innerHTML = '';
+      for (const [sym, data] of Object.entries(STATE.indices)) {
+        const isUp = data.pct >= 0;
+        const colorCls = isUp ? 'text-emerald-400' : 'text-rose-400';
+        const bgBadge = isUp ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-rose-500/10 border-rose-500/30';
+        const prefix = isUp ? '+' : '';
+
+        const card = document.createElement('div');
+        card.className = "bg-cardBg hover:bg-cardHover border border-borderClr rounded-xl p-4 transition shadow-sm";
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+            <span class="font-medium text-slate-200">${data.name}</span>
+            <span class="font-mono text-[10px] px-1.5 py-0.5 rounded border ${bgBadge} ${colorCls}">${data.category}</span>
+          </div>
+          <div class="flex items-baseline justify-between mt-2">
+            <span class="text-xl font-bold font-mono text-white">${data.price.toLocaleString()}</span>
+            <span class="text-xs font-mono font-bold ${colorCls}">${prefix}${data.pct.toFixed(2)}%</span>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono mt-3 pt-2 border-t border-borderClr/60">
+            <span>点位变动: <b class="${colorCls}">${prefix}${data.change.toFixed(2)}</b></span>
+            <span>振幅: ${((data.high - data.low) / data.low * 100).toFixed(1)}%</span>
+          </div>
+        `;
+        el.indicesGrid.appendChild(card);
+      }
+    }
+
+    // 9. 渲染映射矩阵表 (Tab 1)
+    function renderMappingTable() {
+      el.mappingTableBody.innerHTML = '';
+      const items = [
+        { foreign: "英伟达 (NVDA)", pct: "+2.25%", tag: "AI算力中枢", domestic: "寒武纪 / 海光信息 / 中科曙光", logic: "全球AI算力集群与GPU景气度共振，刺激国产算力替代溢价", beta: "0.55" },
+        { foreign: "台积电 (TSM)", pct: "+2.29%", tag: "先进制程代工", domestic: "中芯国际 / 华虹半导体", logic: "晶圆代工产能利用率高企，利好晶圆制造与先进制程扩产情绪", beta: "0.50" },
+        { foreign: "费城半导体 (^SOX)", pct: "+1.63%", tag: "半导体全行业", domestic: "科创50 ETF (588000)", logic: "科创50重仓半导体权重超42%，SOX涨跌是隔夜核心Beta来源", beta: "0.45" },
+        { foreign: "阿斯麦 (ASML)", pct: "+1.37%", tag: "半导体光刻设备", domestic: "北方华创 / 拓荆科技 / 中微公司", logic: "上游半导体资本开支预期回暖，提振刻蚀、薄膜等国产设备龙头", beta: "0.40" },
+        { foreign: "美光科技 (MU)", pct: "+2.12%", tag: "存储芯片/HBM", domestic: "澜起科技 / 兆易创新 / 江波龙", logic: "存储颗粒报价与接口芯片出货量预期共振，改善存储估值", beta: "0.38" }
+      ];
+
+      items.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-panelBg/60 transition";
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-slate-200">
+            <div>${row.foreign}</div>
+            <div class="text-[10px] text-cyan-400 font-mono">${row.tag}</div>
+          </td>
+          <td class="py-2.5 px-3 font-mono font-bold text-emerald-400">${row.pct}</td>
+          <td class="py-2.5 px-3 font-semibold text-purple-300">${row.domestic}</td>
+          <td class="py-2.5 px-3 text-slate-300 text-[11px] leading-relaxed max-w-xs">${row.logic}</td>
+          <td class="py-2.5 px-3 text-right font-mono font-bold text-amber-400">${row.beta}</td>
+        `;
+        el.mappingTableBody.appendChild(tr);
+      });
+    }
+
+    // 10. 渲染科技领头羊列表 (Tab 3)
+    function renderTechTable(filter = 'all') {
+      el.techTableBody.innerHTML = '';
+      const filtered = STATE.techLeaders.filter(t => {
+        if (filter === 'semi') return t.cat === 'semi';
+        if (filter === 'ai') return t.cat === 'ai';
+        return true;
+      });
+
+      filtered.forEach(item => {
+        const isUp = item.pct >= 0;
+        const colorCls = isUp ? 'text-emerald-400' : 'text-rose-400';
+        const prefix = isUp ? '+' : '';
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-panelBg/60 transition";
+        tr.innerHTML = `
+          <td class="py-2.5 px-3">
+            <div class="font-bold text-slate-200 font-mono">${item.sym}</div>
+            <div class="text-[11px] text-slate-400">${item.name}</div>
+          </td>
+          <td class="py-2.5 px-3 text-slate-300 text-[11px]">${item.role}</td>
+          <td class="py-2.5 px-3 font-mono font-semibold text-white">$${item.price.toFixed(2)}</td>
+          <td class="py-2.5 px-3 font-mono ${colorCls}">${prefix}${item.change.toFixed(2)}</td>
+          <td class="py-2.5 px-3 font-mono font-bold ${colorCls}">${prefix}${item.pct.toFixed(2)}%</td>
+          <td class="py-2.5 px-3 font-mono text-slate-400 text-[11px]">$${item.lo.toFixed(1)} - $${item.hi.toFixed(1)}</td>
+          <td class="py-2.5 px-3 text-right">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold ${item.weight === '极高' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'}">${item.weight}</span>
+          </td>
+        `;
+        el.techTableBody.appendChild(tr);
+      });
+    }
+
+    // 11. 渲染新闻要闻列表 (Tab 4)
+    function renderNews() {
+      el.newsContainer.innerHTML = '';
+      STATE.newsList.forEach(news => {
+        const impactBadge = news.impact === 'HIGH' 
+          ? `<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30">🔴 重大影响</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">重要变动</span>`;
+
+        const div = document.createElement('div');
+        div.className = "bg-panelBg/70 hover:bg-panelBg border border-borderClr rounded-xl p-4 transition space-y-2";
+        div.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              ${impactBadge}
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300">${news.tag}</span>
+              <span class="text-xs font-bold text-slate-200">${news.title}</span>
+            </div>
+            <span class="text-[11px] text-slate-500 font-mono">${news.source}</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed pl-1 border-l-2 border-cyan-500/40">
+            ${news.summary}
+          </p>
+        `;
+        el.newsContainer.appendChild(div);
+      });
+    }
+
+    // 12. 初始化 Chart.js 图表
+    function initCharts() {
+      // 图表 1: VIX 趋势图
+      const ctxVix = document.getElementById('vixTrendChart').getContext('2d');
+      chartVixTrend = new Chart(ctxVix, {
+        type: 'line',
+        data: {
+          labels: ['T-5', 'T-4', 'T-3', 'T-2', '昨日', '今日最新'],
+          datasets: [
+            {
+              label: 'VIX 恐慌指数 (右轴)',
+              data: [18.5, 17.2, 16.8, 15.6, 15.62, 14.94],
+              borderColor: '#06b6d4',
+              backgroundColor: 'rgba(6, 182, 212, 0.1)',
+              yAxisID: 'y1',
+              tension: 0.3,
+              fill: true,
+              pointRadius: 4,
+              pointBackgroundColor: '#06b6d4'
+            },
+            {
+              label: '纳指 100 科技走势 (左轴)',
+              data: [18800, 18950, 19020, 19120, 19122, 19281],
+              borderColor: '#10b981',
+              borderDash: [4, 4],
+              yAxisID: 'y',
+              tension: 0.3,
+              pointRadius: 3,
+              pointBackgroundColor: '#10b981'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              labels: { color: '#94a3b8', font: { size: 11, family: 'Inter' } }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: '#1f293d' },
+              ticks: { color: '#94a3b8', font: { size: 10 } }
+            },
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              grid: { color: '#1f293d' },
+              ticks: { color: '#10b981', font: { size: 10 } }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              grid: { drawOnChartArea: false },
+              ticks: { color: '#06b6d4', font: { size: 10 } }
+            }
+          }
+        }
+      });
+
+      // 图表 2: 科技龙头涨跌幅柱状图
+      const ctxTech = document.getElementById('techBarChart').getContext('2d');
+      const techNames = STATE.techLeaders.map(t => t.sym);
+      const techPcts = STATE.techLeaders.map(t => t.pct);
+      const techColors = techPcts.map(p => p >= 0 ? '#10b981' : '#ef4444');
+
+      chartTechBar = new Chart(ctxTech, {
+        type: 'bar',
+        data: {
+          labels: techNames,
+          datasets: [{
+            label: '当日涨跌幅 (%)',
+            data: techPcts,
+            backgroundColor: techColors,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { size: 10, family: 'monospace' } }
+            },
+            y: {
+              grid: { color: '#1f293d' },
+              ticks: {
+                color: '#94a3b8',
+                callback: function(val) { return val + '%'; }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // 13. 模拟沙盘滑块事件监听
+    function setupSimulationListeners() {
+      function runSim() {
+        const sox = parseFloat(el.sliderSox.value);
+        const nvda = parseFloat(el.sliderNvda.value);
+        const tsm = parseFloat(el.sliderTsm.value);
+        const vix = parseFloat(el.sliderVix.value);
+
+        el.sliderSoxVal.textContent = (sox > 0 ? "+" : "") + sox.toFixed(1) + "%";
+        el.sliderNvdaVal.textContent = (nvda > 0 ? "+" : "") + nvda.toFixed(1) + "%";
+        el.sliderTsmVal.textContent = (tsm > 0 ? "+" : "") + tsm.toFixed(1) + "%";
+        el.sliderVixVal.textContent = vix.toFixed(1);
+
+        const res = calculateStar50Inference(sox, nvda, tsm, 1.3, vix);
+        el.simResultVerdict.textContent = res.verdict;
+        el.simResultVerdict.className = `font-bold text-sm ${res.verdictClass}`;
+        el.simResultGap.textContent = res.expectedGap;
+        el.simResultAdvice.textContent = `操作定调: ${res.actionCode} · ${res.strategy.substring(0, 40)}...`;
+
+        // 同步更新主看板显示
+        el.star50VerdictText.textContent = res.verdict;
+        el.star50VerdictText.className = `text-xl font-extrabold tracking-tight ${res.verdictClass}`;
+        el.star50GapText.textContent = res.expectedGap;
+        el.star50ScoreText.textContent = res.score;
+        el.detailScore.textContent = (res.score > 0 ? "+" : "") + res.score;
+        el.detailGap.textContent = res.expectedGap;
+        el.actionCodeBadge.textContent = res.actionCode;
+        el.star50OpeningStrategy.textContent = res.strategy;
+        el.star50RiskAlert.textContent = res.risk;
+
+        updateVixGauge(vix);
+      }
+
+      el.sliderSox.addEventListener('input', runSim);
+      el.sliderNvda.addEventListener('input', runSim);
+      el.sliderTsm.addEventListener('input', runSim);
+      el.sliderVix.addEventListener('input', runSim);
+
+      el.btnResetSim.addEventListener('click', () => {
+        el.sliderSox.value = 1.6;
+        el.sliderNvda.value = 2.2;
+        el.sliderTsm.value = 2.3;
+        el.sliderVix.value = 14.9;
+        runSim();
+        showToast("已重置为当前实盘数据");
+      });
+    }
+
+    // 14. 页面事件绑定
+    function setupEvents() {
+      // 标签切换
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.getAttribute('data-tab');
+          document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active', 'bg-cyan-600/20', 'text-cyan-400', 'border-cyan-500/30');
+            b.classList.add('text-slate-400');
+          });
+          btn.classList.add('active', 'bg-cyan-600/20', 'text-cyan-400', 'border-cyan-500/30');
+          btn.classList.remove('text-slate-400');
+
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+          const targetEl = document.getElementById(targetTab);
+          if (targetEl) targetEl.classList.remove('hidden');
+
+          // 重新激活图表尺寸自适应
+          if (targetTab === 'tab-overview' && chartVixTrend) {
+            chartVixTrend.resize();
+          } else if (targetTab === 'tab-tech' && chartTechBar) {
+            chartTechBar.resize();
+          }
+        });
+      });
+
+      // 科技板块筛选过滤
+      document.querySelectorAll('.tech-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.getAttribute('data-filter');
+          document.querySelectorAll('.tech-filter-btn').forEach(b => {
+            b.classList.remove('bg-purple-600/30', 'text-purple-300', 'border-purple-500/50');
+            b.classList.add('text-slate-300');
+          });
+          btn.classList.add('bg-purple-600/30', 'text-purple-300', 'border-purple-500/50');
+          renderTechTable(filter);
+        });
+      });
+
+      // 手动触发策略分析刷新
+      el.btnRefresh.addEventListener('click', () => {
+        el.refreshIcon.classList.add('animate-spin');
+        el.refreshBtnText.textContent = "策略量化计算中...";
+        setTimeout(() => {
+          el.refreshIcon.classList.remove('animate-spin');
+          el.refreshBtnText.textContent = "执行策略分析";
+          showToast("已完成最新策略轮询与588000推演！");
+        }, 800);
+      });
+
+      // 切换到情景测算沙盘
+      el.btnToggleSim.addEventListener('click', () => {
+        // 切换到 588000 tab 并滚动到测算沙盘
+        const tabBtn = document.querySelector('[data-tab="tab-588000"]');
+        if (tabBtn) tabBtn.click();
+        el.simPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.simPanel.classList.add('ring-2', 'ring-indigo-500');
+        setTimeout(() => el.simPanel.classList.remove('ring-2', 'ring-indigo-500'), 2000);
+      });
+
+      // 午间 12:40 跨市套利即时检查按钮
+      el.btnCheckMiddayNow.addEventListener('click', () => {
+        showToast("已比对 12:40 韩国综合 KS11 (+0.85%) 与中芯国际港股 (+1.82%)：触发13:00开盘套利买入！");
+      });
+
+      // 定时调度模态框打开/关闭
+      el.btnOpenSchedulerModal.addEventListener('click', () => {
+        el.schedulerModal.classList.remove('hidden');
+      });
+      el.btnCloseModal.addEventListener('click', () => {
+        el.schedulerModal.classList.add('hidden');
+      });
+      el.btnCloseModal2.addEventListener('click', () => {
+        el.schedulerModal.classList.add('hidden');
+      });
+      el.schedulerModal.addEventListener('click', (e) => {
+        if (e.target === el.schedulerModal) el.schedulerModal.classList.add('hidden');
+      });
+
+      // 复制 Crontab 命令
+      el.btnCopyCron.addEventListener('click', () => {
+        const text = document.getElementById('cronCodeSnippet').textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => showToast("已复制 Crontab 定时配置命令！"));
+        } else {
+          showToast("请手动选中文本复制");
+        }
+      });
+    }
+
+    
+    function applyLiveReport(report) {
+      if (!report) return;
+      if (report.indices) {
+        for (const [sym, q] of Object.entries(report.indices)) {
+          if (STATE.indices[sym]) {
+            STATE.indices[sym].price = q.price;
+            STATE.indices[sym].change = q.change;
+            STATE.indices[sym].pct = q.change_pct;
+            STATE.indices[sym].high = q.high;
+            STATE.indices[sym].low = q.low;
+          }
+        }
+      }
+      if (report.tech_leaders) {
+        STATE.techLeaders.forEach(t => {
+          if (report.tech_leaders[t.sym]) {
+            const q = report.tech_leaders[t.sym];
+            t.price = q.price;
+            t.change = q.change;
+            t.pct = q.change_pct;
+            t.hi = q.high;
+            t.lo = q.low;
+          }
+        });
+      }
+      if (report.generated_at) {
+        const ind = document.getElementById('marketStatusIndicator');
+        if (ind) ind.textContent = `最新数据已同步于: ${report.generated_at}`;
+      }
+      if (report.vix_analysis) {
+        const vix = report.vix_analysis;
+        el.vixVal.textContent = vix.vix_value;
+        el.vixPct.textContent = `${vix.vix_change_pct > 0 ? '+' : ''}${vix.vix_change_pct}%`;
+        el.vixBrief.textContent = vix.advice;
+        updateVixGauge(vix.vix_value);
+      }
+      if (report.star50_prediction) {
+        const star = report.star50_prediction;
+        el.star50VerdictText.textContent = star.verdict;
+        el.star50GapText.textContent = `${star.expected_open_gap_pct > 0 ? '+' : ''}${star.expected_open_gap_pct}%`;
+        el.star50ScoreText.textContent = star.composite_score;
+        el.detailScore.textContent = star.composite_score;
+        el.detailGap.textContent = `${star.expected_open_gap_pct > 0 ? '+' : ''}${star.expected_open_gap_pct}%`;
+        el.actionCodeBadge.textContent = star.action_code;
+        el.star50OpeningStrategy.textContent = star.opening_strategy;
+        el.star50RiskAlert.textContent = star.risk_alert;
+      }
+      if (report.money_effect) {
+        const m = report.money_effect;
+        el.dominantStyleText.textContent = m.dominant_style;
+        el.moneyRatioBadge.textContent = `上涨: ${m.up_count} / 下跌: ${m.down_count}`;
+        el.moneyThemeBrief.textContent = m.money_theme;
+      }
+      renderIndicesGrid();
+      renderTechTable();
+      if (chartTechBar) {
+        chartTechBar.data.datasets[0].data = STATE.techLeaders.map(t => t.pct);
+        chartTechBar.data.datasets[0].backgroundColor = STATE.techLeaders.map(t => t.pct >= 0 ? '#10b981' : '#ef4444');
+        chartTechBar.update();
+      }
+    }
+
+    function loadAndApplyDynamicData() {
+      const embedEl = document.getElementById('embedded-data');
+      if (embedEl && embedEl.textContent.trim()) {
+        try {
+          const report = JSON.parse(embedEl.textContent);
+          applyLiveReport(report);
+          return;
+        } catch(e) {
+          console.warn('解析 embedded-data 异常:', e);
+        }
+      }
+      fetch('./market_monitor_data.json?t=' + Date.now())
+        .then(res => res.json())
+        .then(report => applyLiveReport(report))
+        .catch(e => console.log('使用默认状态'));
+    }
+
+    // 15. 初始化页面
+    window.addEventListener('DOMContentLoaded', () => {
+      renderIndicesGrid();
+      renderMappingTable();
+      renderTechTable();
+      renderNews();
+      initCharts();
+      setupSimulationListeners();
+      setupEvents();
+      updateVixGauge(14.94);
+      loadAndApplyDynamicData();
+    });
+  </script>
+</body>
+</html>

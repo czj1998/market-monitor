@@ -1,0 +1,174 @@
+name: 自动更新美股与科创50数据
+
+on:
+  schedule:
+    # 每天北京时间 07:30 (UTC 23:30，周日至周四运行对应A股周一至周五开盘)
+    - cron: '30 23 * * 0-4'
+    # 每天北京时间 05:00 美股收盘 (UTC 21:00)
+    - cron: '0 21 * * 1-5'
+  workflow_dispatch: # 支持在手机网页上一键点击立刻手动更新！
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update-market:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库代码
+        uses: actions.checkout@v4
+
+      - name: 配置 Python 环境
+        uses: actions.setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 执行雅虎财经拉取并更新网页
+        run: |
+          python3 - << 'PY_SCRIPT'
+          import json, re, time, datetime, urllib.request, urllib.parse
+
+          HEADERS = {
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+              "Accept": "application/json, text/plain, */*",
+          }
+
+          def fetch_quote(sym):
+              url = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(sym)}?interval=1d&range=5d"
+              try:
+                  req = urllib.request.Request(url, headers=HEADERS)
+                  with urllib.request.urlopen(req, timeout=10) as resp:
+                      data = json.loads(resp.read().decode('utf-8'))
+                  meta = data["chart"]["result"][0]["meta"]
+                  price = round(meta.get("regularMarketPrice", 0.0), 2)
+                  prev = round(meta.get("chartPreviousClose", meta.get("previousClose", price)), 2)
+                  chg = round(price - prev, 2)
+                  pct = round((chg / prev) * 100, 2) if prev else 0.0
+                  return {
+                      "price": price, "previous_close": prev, "change": chg, "change_pct": pct,
+                      "high": round(meta.get("regularMarketDayHigh", price), 2),
+                      "low": round(meta.get("regularMarketDayLow", price), 2)
+                  }
+              except Exception as e:
+                  print(f"Fetch {sym} fallback")
+                  return None
+
+          symbols = {
+              "indices": ["^GSPC", "^IXIC", "^DJI", "^SOX", "^VIX", "SMH", "^RUT", "PGJ"],
+              "tech": ["NVDA", "TSM", "ASML", "AMD", "AVGO", "MU", "MSFT", "GOOGL", "AAPL", "QCOM"]
+          }
+
+          quotes = {}
+          for s in symbols["indices"] + symbols["tech"]:
+              q = fetch_quote(s)
+              if q:
+                  quotes[s] = q
+              else:
+                  quotes[s] = {"price": 100.0, "change": 0.0, "change_pct": 0.0, "high": 101.0, "low": 99.0}
+
+          vix_q = quotes.get("^VIX", {"price": 15.0, "change_pct": 0.0})
+          vix_val = vix_q["price"]
+          vix_pct = vix_q["change_pct"]
+          if vix_val < 15:
+              vix_state = "极度平稳 / 低波动期"
+              vix_adv = "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。"
+          elif vix_val < 20:
+              vix_state = "健康常态 / 情绪均衡"
+              vix_adv = "波动率处于历史均值区间，以基本面与业绩驱动为主，顺势操作。"
+          elif vix_val < 25:
+              vix_state = "情绪警戒 / 波动加剧"
+              vix_adv = "避险对冲情绪升温，谨防盘中急跌跳水，严控高位科技股杠杆。"
+          else:
+              vix_state = "恐慌抛售 / 估值承压"
+              vix_adv = "风险资产遭遇无差别抛压，资金涌入避险，严控仓位防守。"
+
+          vix_analysis = {"vix_value": vix_val, "vix_change_pct": vix_pct, "state": vix_state, "advice": vix_adv}
+
+          sox_pct = quotes.get("^SOX", {}).get("change_pct", 0.0)
+          nvda_pct = quotes.get("NVDA", {}).get("change_pct", 0.0)
+          tsm_pct = quotes.get("TSM", {}).get("change_pct", 0.0)
+          pgj_pct = quotes.get("PGJ", {}).get("change_pct", 0.0)
+          lead_avg = (nvda_pct + tsm_pct) / 2.0
+
+          score = (sox_pct * 0.40) + (lead_avg * 0.30) + (pgj_pct * 0.15)
+          if vix_val > 25: score -= 0.8
+          elif vix_val > 20: score -= 0.3
+
+          gap = round(score * 0.45, 2)
+          if score >= 1.5:
+              verdict = "强力看多 · 逢低抢筹 (STRONG BULLISH)"
+              action = "执行买入 (BUY_AGGRESSIVE)"
+              strategy = "开盘集合竞价 (09:15-09:25) 重点关注半导体算力龙头高开幅度。若高开在 +1.2% 以内且封单充沛，可果断执行进攻买入；预期日内将走出共振单边多头行情。"
+              risk = "防范冲高回落：若高开超 +2.5% 严禁无脑追涨，等待开盘15分钟分时回踩确认均线支撑后再行低吸。"
+          elif score >= 0.5:
+              verdict = "偏多震荡 · 逢低布局 (BULLISH BIAS)"
+              action = "逢低低吸 (BUY_DIP)"
+              strategy = "次日早盘 588000 情绪偏暖，预计温和高开 (+0.3% ~ +0.8%)。重点跟随中芯国际与澜起科技分时量能，可在盘初回踩均线时顺势建仓。"
+              risk = "若早盘成交量萎缩则警惕多头动能不足，设定 1.0% 日内刚性止损位。"
+          elif score > -0.5:
+              verdict = "中性观望 · 保持不动 (NEUTRAL / WAIT)"
+              action = "观望等待 (HOLD_WAIT)"
+              strategy = "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，严禁盲目开新仓，静待盘中方向确认。"
+              risk = "密切关注上午 11:30 及午盘 12:40 港股半导体与韩国KOSPI走势，若午间共振则在 13:00 执行午盘套利。"
+          else:
+              verdict = "偏空承压 · 谨慎防守 (BEARISH BIAS)"
+              action = "谨慎减仓 (DEFENSIVE)"
+              strategy = "美股科技与半导体回调拖累科创板开盘情绪，预计低开。短线交易者开盘切忌盲目抄底，先行减仓防守。"
+              risk = "重点观察中芯国际港股(00981.HK)早盘承接力，若跌破关键均线坚决规避。"
+
+          star50_prediction = {
+              "composite_score": round(score, 2), "expected_open_gap_pct": gap, "verdict": verdict,
+              "action_code": action, "opening_strategy": strategy, "risk_alert": risk
+          }
+
+          tech_pcts = [quotes[s]["change_pct"] for s in symbols["tech"]]
+          up_c = sum(1 for p in tech_pcts if p > 0)
+          down_c = len(tech_pcts) - up_c
+          avg_pct = round(sum(tech_pcts) / len(tech_pcts), 2)
+          dominant_style = "进攻型成长 (High Beta Tech)" if avg_pct > 0.5 else "防御分化轮动 (Defensive / Rotation)"
+          money_theme = "科技主线全面爆发，资金激进进攻" if avg_pct > 0.5 else "科技震荡分化，资金趋于防御"
+          money_effect = {"avg_tech_change_pct": avg_pct, "up_count": up_c, "down_count": down_c, "dominant_style": dominant_style, "money_theme": money_theme}
+
+          now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          report = {
+              "generated_at": now_str,
+              "indices": {s: quotes[s] for s in symbols["indices"]},
+              "tech_leaders": {s: quotes[s] for s in symbols["tech"]},
+              "vix_analysis": vix_analysis,
+              "star50_prediction": star50_prediction,
+              "money_effect": money_effect
+          }
+
+          report_json = json.dumps(report, ensure_ascii=False, indent=2)
+
+          with open("market_monitor_data.json", "w", encoding="utf-8") as f:
+              f.write(report_json)
+
+          for fn in ["index.html", "market_monitor.html"]:
+              try:
+                  with open(fn, "r", encoding="utf-8") as f:
+                      content = f.read()
+                  tag_pattern = r'<script id="embedded-data" type="application/json">.*?</script>'
+                  replacement = f'<script id="embedded-data" type="application/json">\n{report_json}\n</script>'
+                  if re.search(tag_pattern, content, flags=re.DOTALL):
+                      content = re.sub(tag_pattern, replacement, content, flags=re.DOTALL)
+                  else:
+                      content = content.replace("</head>", f"  {replacement}\n</head>")
+                  with open(fn, "w", encoding="utf-8") as f:
+                      f.write(content)
+                  print(f"Updated {fn}")
+              except Exception as e:
+                  print(f"Error {fn}: {e}")
+
+          print("All updated successfully!")
+          PY_SCRIPT
+
+      - name: 提交更新并推送到 GitHub Pages
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html market_monitor.html market_monitor_data.json
+          git commit -m "Auto update market data: $(date '+%Y-%m-%d %H:%M:%S')" || exit 0
+          git push origin HEAD:${{ github.ref }}

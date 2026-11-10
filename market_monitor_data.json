@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10 02:15:28",
+  "generated_at": "2026-11-10 12:58:23",
   "indices": {
     "^GSPC": {
       "price": 7549.94,
@@ -34,18 +34,18 @@
       "low": 9467.26
     },
     "^VIX": {
-      "price": 19.92,
-      "previous_close": 25.64,
-      "change": -5.72,
-      "change_pct": -22.31,
-      "high": 25.08,
-      "low": 19.64
+      "price": 20.07,
+      "previous_close": 19.92,
+      "change": 0.15,
+      "change_pct": 0.75,
+      "high": 20.32,
+      "low": 19.62
     },
     "SMH": {
       "price": 487.41,
-      "previous_close": 447.73,
-      "change": 39.68,
-      "change_pct": 8.86,
+      "previous_close": 463.96,
+      "change": 23.45,
+      "change_pct": 5.05,
       "high": 490.47,
       "low": 462.88
     },
@@ -59,9 +59,9 @@
     },
     "PGJ": {
       "price": 22.28,
-      "previous_close": 22.21,
-      "change": 0.07,
-      "change_pct": 0.32,
+      "previous_close": 22.54,
+      "change": -0.26,
+      "change_pct": -1.15,
       "high": 22.3,
       "low": 22.12
     }
@@ -69,101 +69,101 @@
   "tech_leaders": {
     "NVDA": {
       "price": 178.67,
-      "previous_close": 181.6,
-      "change": -2.93,
-      "change_pct": -1.61,
+      "previous_close": 186.64,
+      "change": -7.97,
+      "change_pct": -4.27,
       "high": 179.91,
       "low": 170.24
     },
     "TSM": {
       "price": 388.62,
-      "previous_close": 353.1,
-      "change": 35.52,
-      "change_pct": 10.06,
+      "previous_close": 375.44,
+      "change": 13.18,
+      "change_pct": 3.51,
       "high": 394.39,
       "low": 380.33
     },
     "ASML": {
       "price": 1513.25,
-      "previous_close": 1356.65,
-      "change": 156.6,
-      "change_pct": 11.54,
+      "previous_close": 1424.75,
+      "change": 88.5,
+      "change_pct": 6.21,
       "high": 1525.83,
       "low": 1468.02
     },
     "AMD": {
       "price": 508.58,
-      "previous_close": 404.4,
-      "change": 104.18,
-      "change_pct": 25.76,
+      "previous_close": 449.04,
+      "change": 59.54,
+      "change_pct": 13.26,
       "high": 515.18,
       "low": 468.21
     },
     "AVGO": {
       "price": 319.48,
-      "previous_close": 291.53,
-      "change": 27.95,
-      "change_pct": 9.59,
+      "previous_close": 293.69,
+      "change": 25.79,
+      "change_pct": 8.78,
       "high": 323.05,
       "low": 304.29
     },
     "MU": {
       "price": 733.15,
-      "previous_close": 656.39,
-      "change": 76.76,
-      "change_pct": 11.69,
+      "previous_close": 690.0,
+      "change": 43.15,
+      "change_pct": 6.25,
       "high": 744.74,
       "low": 689.65
     },
     "MSFT": {
       "price": 545.18,
-      "previous_close": 535.93,
-      "change": 9.25,
-      "change_pct": 1.73,
+      "previous_close": 530.61,
+      "change": 14.57,
+      "change_pct": 2.75,
       "high": 548.28,
       "low": 538.7
     },
     "GOOGL": {
       "price": 288.15,
-      "previous_close": 282.57,
-      "change": 5.58,
-      "change_pct": 1.97,
+      "previous_close": 284.78,
+      "change": 3.37,
+      "change_pct": 1.18,
       "high": 296.33,
       "low": 288.09
     },
     "AAPL": {
       "price": 350.69,
-      "previous_close": 344.17,
-      "change": 6.52,
-      "change_pct": 1.89,
+      "previous_close": 342.37,
+      "change": 8.32,
+      "change_pct": 2.43,
       "high": 352.28,
       "low": 344.78
     },
     "QCOM": {
       "price": 171.47,
-      "previous_close": 156.75,
-      "change": 14.72,
-      "change_pct": 9.39,
+      "previous_close": 165.41,
+      "change": 6.06,
+      "change_pct": 3.66,
       "high": 176.28,
       "low": 163.29
     }
   },
   "vix_analysis": {
-    "vix_value": 19.92,
-    "vix_change_pct": -22.31,
-    "state": "健康常态 / 情绪均衡",
-    "advice": "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。"
+    "vix_value": 20.07,
+    "vix_change_pct": 0.75,
+    "state": "情绪警戒 / 波动加剧",
+    "advice": "避险情绪升温，谨防盘中急跌跳水。"
   },
   "star50_prediction": {
-    "composite_score": 4.06,
-    "expected_open_gap_pct": 1.82,
+    "composite_score": 2.15,
+    "expected_open_gap_pct": 0.97,
     "verdict": "强力看多 · 逢低抢筹 (STRONG BULLISH)",
     "action_code": "执行买入 (BUY_AGGRESSIVE)",
     "opening_strategy": "开盘集合竞价 (09:15-09:25) 重点关注半导体算力龙头高开幅度。若高开在 +1.2% 以内且封单充沛，可果断执行进攻买入；预期日内将走出共振单边多头行情。",
     "risk_alert": "防范冲高回落：若高开超 +2.5% 严禁无脑追涨，等待开盘15分钟分时回踩确认均线支撑后再行低吸。"
   },
   "money_effect": {
-    "avg_tech_change_pct": 8.2,
+    "avg_tech_change_pct": 4.38,
     "up_count": 9,
     "down_count": 1,
     "dominant_style": "进攻型成长 (High Beta Tech)",
@@ -172,25 +172,25 @@
   "midday_arbitrage": {
     "smic": {
       "name": "中芯国际",
-      "price": 47.72,
+      "price": 47.24,
       "prev": 46.04,
-      "pct": 3.65
+      "pct": 2.61
     },
     "huahong": {
       "name": "华虹宏力",
-      "price": 74.6,
+      "price": 74.55,
       "prev": 71.85,
-      "pct": 3.83
+      "pct": 3.76
     },
     "star_etf": {
       "name": "科创50ETF华夏",
-      "price": 1.341,
+      "price": 1.337,
       "prev": 1.327,
-      "pct": 1.06
+      "pct": 0.75
     },
     "ks11": {
-      "price": 5217.74,
-      "pct": 3.12
+      "price": 5239.13,
+      "pct": 4.39
     }
   }
 }

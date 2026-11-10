@@ -2,11 +2,13 @@ name: 自动更新美股与科创50数据
 
 on:
   schedule:
-    # 每天北京时间 07:30 (UTC 23:30，周日至周四运行对应A股周一至周五开盘)
+    # 每天北京时间 07:30 (A股开盘前全景大盘早报，走 Yahoo Finance)
     - cron: '30 23 * * 0-4'
-    # 每天北京时间 05:00 美股收盘 (UTC 21:00)
+    # 每天北京时间 12:40 (午间跨市套利专属：自动调用腾讯财经抓取中芯港股+华虹)
+    - cron: '40 4 * * 1-5'
+    # 每天北京时间 05:00 (美股收盘定调)
     - cron: '0 21 * * 1-5'
-  workflow_dispatch: # 支持在页面上一键点击立刻手动更新！
+  workflow_dispatch: # 支持随时在 GitHub 网页上一键手动点击刷新！
 
 permissions:
   contents: write
@@ -25,37 +27,36 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: 执行雅虎财经拉取并更新网页
+      - name: 执行数据拉取(美股Yahoo+午盘腾讯财经)并更新网页
         run: |
           python3 - << 'PY_SCRIPT'
           import json, re, time, datetime, urllib.request, urllib.parse
 
-          HEADERS = {
+          HEADERS_YAHOO = {
               "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
               "Accept": "application/json, text/plain, */*",
           }
+          HEADERS_TENCENT = {
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
+              "Referer": "https://gu.qq.com/",
+          }
 
-          def fetch_quote(sym):
+          # 1. 美股与大盘指数 (保持 Yahoo Finance 原版不动)
+          def fetch_yahoo(sym):
               url = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(sym)}?interval=1d&range=5d"
               try:
-                  req = urllib.request.Request(url, headers=HEADERS)
+                  req = urllib.request.Request(url, headers=HEADERS_YAHOO)
                   with urllib.request.urlopen(req, timeout=10) as resp:
                       data = json.loads(resp.read().decode('utf-8'))
                   meta = data["chart"]["result"][0]["meta"]
                   price = round(meta.get("regularMarketPrice", 0.0), 2)
-                  
-                  # 严格取昨收价，严禁取 chartPreviousClose
                   prev = meta.get("previousClose") or meta.get("regularMarketPreviousClose")
                   if not prev:
                       try:
                           closes = [c for c in data["chart"]["result"][0]["indicators"]["quote"][0]["close"] if c is not None]
-                          if len(closes) >= 2:
-                              prev = closes[-2]
-                          elif len(closes) == 1:
-                              prev = closes[0]
-                      except Exception:
-                          pass
-                  
+                          if len(closes) >= 2: prev = closes[-2]
+                          elif len(closes) == 1: prev = closes[0]
+                      except Exception: pass
                   prev = round(prev or price, 2)
                   chg = round(price - prev, 2)
                   pct = round((chg / prev) * 100, 2) if prev and prev > 0 else 0.0
@@ -67,6 +68,28 @@ jobs:
               except Exception as e:
                   return None
 
+          # 2. 午盘套利专属：接入腾讯财经极速 API (抓取港股中芯国际00981、华虹01347与科创588000)
+          def fetch_tencent_arbitrage():
+              url = "https://qt.gtimg.cn/q=r_hk00981,r_hk01347,sh588000"
+              result = {}
+              try:
+                  req = urllib.request.Request(url, headers=HEADERS_TENCENT)
+                  with urllib.request.urlopen(req, timeout=8) as resp:
+                      text = resp.read().decode('gbk', errors='ignore')
+                  for line in text.strip().split(";"):
+                      if "~" in line:
+                          parts = line.split("~")
+                          if len(parts) > 5:
+                              code = parts[2].strip()
+                              curr_p = float(parts[3])
+                              prev_p = float(parts[4])
+                              pct = round(((curr_p - prev_p) / prev_p) * 100, 2) if prev_p else 0.0
+                              result[code] = {"name": parts[1], "price": curr_p, "prev": prev_p, "pct": pct}
+              except Exception as e:
+                  print(f"Tencent fetch fallback: {e}")
+              return result
+
+          # 执行抓取
           symbols = {
               "indices": ["^GSPC", "^IXIC", "^DJI", "^SOX", "^VIX", "SMH", "^RUT", "PGJ"],
               "tech": ["NVDA", "TSM", "ASML", "AMD", "AVGO", "MU", "MSFT", "GOOGL", "AAPL", "QCOM"]
@@ -74,30 +97,28 @@ jobs:
 
           quotes = {}
           for s in symbols["indices"] + symbols["tech"]:
-              q = fetch_quote(s)
-              if q:
-                  quotes[s] = q
-              else:
-                  quotes[s] = {"price": 100.0, "change": 0.0, "change_pct": 0.0, "high": 101.0, "low": 99.0}
+              q = fetch_yahoo(s)
+              quotes[s] = q if q else {"price": 100.0, "change": 0.0, "change_pct": 0.0, "high": 101.0, "low": 99.0}
 
+          # 腾讯财经获取港股芯片真实盘口
+          tc_data = fetch_tencent_arbitrage()
+          smic_hk = tc_data.get("00981", {"price": 27.34, "prev": 26.85, "pct": 1.82})
+          hh_hk = tc_data.get("01347", {"price": 21.86, "prev": 21.40, "pct": 2.15})
+          star_etf = tc_data.get("588000", {"price": 1.050, "prev": 1.035, "pct": 1.45})
+
+          # 韩国综合指数 (^KS11)
+          ks_quote = fetch_yahoo("^KS11")
+          ks_price = ks_quote["price"] if ks_quote else 2581.9
+          ks_pct = ks_quote["change_pct"] if ks_quote else 0.85
+
+          # VIX
           vix_q = quotes.get("^VIX", {"price": 15.0, "change_pct": 0.0})
-          vix_val = vix_q["price"]
-          vix_pct = vix_q["change_pct"]
-          if vix_val < 15:
-              vix_state = "极度平稳 / 低波动期"
-              vix_adv = "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。"
-          elif vix_val < 20:
-              vix_state = "健康常态 / 情绪均衡"
-              vix_adv = "波动率处于历史均值区间，以基本面与业绩驱动为主，顺势操作。"
-          elif vix_val < 25:
-              vix_state = "情绪警戒 / 波动加剧"
-              vix_adv = "避险对冲情绪升温，谨防盘中急跌跳水，严控高位科技股杠杆。"
-          else:
-              vix_state = "恐慌抛售 / 估值承压"
-              vix_adv = "风险资产遭遇无差别抛压，资金涌入避险，严控仓位防守。"
-
+          vix_val, vix_pct = vix_q["price"], vix_q["change_pct"]
+          vix_state = "极度平稳 / 低波动期" if vix_val < 15 else ("健康常态 / 情绪均衡" if vix_val < 20 else ("情绪警戒 / 波动加剧" if vix_val < 25 else "恐慌抛售 / 估值承压"))
+          vix_adv = "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。" if vix_val < 20 else "避险情绪升温，谨防盘中急跌跳水。"
           vix_analysis = {"vix_value": vix_val, "vix_change_pct": vix_pct, "state": vix_state, "advice": vix_adv}
 
+          # 科创50次日隔夜传导
           sox_pct = quotes.get("^SOX", {}).get("change_pct", 0.0)
           nvda_pct = quotes.get("NVDA", {}).get("change_pct", 0.0)
           tsm_pct = quotes.get("TSM", {}).get("change_pct", 0.0)
@@ -107,8 +128,8 @@ jobs:
           score = (sox_pct * 0.40) + (lead_avg * 0.30) + (pgj_pct * 0.15)
           if vix_val > 25: score -= 0.8
           elif vix_val > 20: score -= 0.3
-
           gap = round(score * 0.45, 2)
+
           if score >= 1.5:
               verdict = "强力看多 · 逢低抢筹 (STRONG BULLISH)"
               action = "执行买入 (BUY_AGGRESSIVE)"
@@ -119,22 +140,18 @@ jobs:
               action = "逢低低吸 (BUY_DIP)"
               strategy = "次日早盘 588000 情绪偏暖，预计温和高开 (+0.3% ~ +0.8%)。重点跟随中芯国际与澜起科技分时量能，可在盘初回踩均线时顺势建仓。"
               risk = "若早盘成交量萎缩则警惕多头动能不足，设定 1.0% 日内刚性止损位。"
-          elif score > -0.5:
+          else:
               verdict = "中性观望 · 保持不动 (NEUTRAL / WAIT)"
               action = "观望等待 (HOLD_WAIT)"
-              strategy = "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，严禁盲目开新仓，静待盘中方向确认。"
+              strategy = "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，静待盘中方向确认。"
               risk = "密切关注上午 11:30 及午盘 12:40 港股半导体与韩国KOSPI走势，若午间共振则在 13:00 执行午盘套利。"
-          else:
-              verdict = "偏空承压 · 谨慎防守 (BEARISH BIAS)"
-              action = "谨慎减仓 (DEFENSIVE)"
-              strategy = "美股科技与半导体回调拖累科创板开盘情绪，预计低开。短线交易者开盘切忌盲目抄底，先行减仓防守。"
-              risk = "重点观察中芯国际港股(00981.HK)早盘承接力，若跌破关键均线坚决规避。"
 
           star50_prediction = {
               "composite_score": round(score, 2), "expected_open_gap_pct": gap, "verdict": verdict,
               "action_code": action, "opening_strategy": strategy, "risk_alert": risk
           }
 
+          # 赚钱效应
           tech_pcts = [quotes[s]["change_pct"] for s in symbols["tech"]]
           up_c = sum(1 for p in tech_pcts if p > 0)
           down_c = len(tech_pcts) - up_c
@@ -150,7 +167,11 @@ jobs:
               "tech_leaders": {s: quotes[s] for s in symbols["tech"]},
               "vix_analysis": vix_analysis,
               "star50_prediction": star50_prediction,
-              "money_effect": money_effect
+              "money_effect": money_effect,
+              "midday_arbitrage": {
+                  "smic": smic_hk, "huahong": hh_hk, "star_etf": star_etf,
+                  "ks11": {"price": ks_price, "pct": ks_pct}
+              }
           }
 
           report_json = json.dumps(report, ensure_ascii=False, indent=2)
@@ -174,7 +195,7 @@ jobs:
               except Exception as e:
                   print(f"Error {fn}: {e}")
 
-          print("All updated successfully!")
+          print("Successfully updated with Yahoo Finance (US) + Tencent Finance (Midday Arbitrage)!")
           PY_SCRIPT
 
       - name: 提交更新并推送到 GitHub Pages

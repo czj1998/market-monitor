@@ -6,7 +6,7 @@ on:
     - cron: '30 23 * * 0-4'
     # 每天北京时间 05:00 美股收盘 (UTC 21:00)
     - cron: '0 21 * * 1-5'
-  workflow_dispatch: # 支持在手机网页上一键点击立刻手动更新！
+  workflow_dispatch: # 支持在页面上一键点击立刻手动更新！
 
 permissions:
   contents: write
@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 检出仓库代码
-        uses: actions.checkout@v4
+        uses: actions/checkout@v4
 
       - name: 配置 Python 环境
-        uses: actions.setup-python@v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -52,7 +52,6 @@ jobs:
                       "low": round(meta.get("regularMarketDayLow", price), 2)
                   }
               except Exception as e:
-                  print(f"Fetch {sym} fallback")
                   return None
 
           symbols = {

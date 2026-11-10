@@ -1,300 +1,172 @@
 {
-  "generated_at": "2026-11-09 23:47:26",
-  "status": "SUCCESS",
+  "generated_at": "2026-11-10 01:37:30",
   "indices": {
     "^GSPC": {
-      "symbol": "^GSPC",
-      "price": 5995.54,
-      "previous_close": 5972.7,
-      "change": 22.84,
-      "change_pct": 0.38,
-      "high": 6055.5,
-      "low": 5935.58,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 7549.94,
+      "previous_close": 7541.4,
+      "change": 8.54,
+      "change_pct": 0.11,
+      "high": 7577.39,
+      "low": 7422.24
     },
     "^IXIC": {
-      "symbol": "^IXIC",
-      "price": 19281.4,
-      "previous_close": 19122.2,
-      "change": 159.2,
-      "change_pct": 0.83,
-      "high": 19474.21,
-      "low": 19088.59,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 25253.14,
+      "previous_close": 25164.31,
+      "change": 88.83,
+      "change_pct": 0.35,
+      "high": 25354.3,
+      "low": 24762.57
     },
     "^DJI": {
-      "symbol": "^DJI",
-      "price": 43988.99,
-      "previous_close": 44248.64,
-      "change": -259.65,
-      "change_pct": -0.59,
-      "high": 44428.88,
-      "low": 43549.1,
-      "volume": 12500000,
-      "timestamp": 1794268046
-    },
-    "^RUT": {
-      "symbol": "^RUT",
-      "price": 2399.63,
-      "previous_close": 2383.13,
-      "change": 16.5,
-      "change_pct": 0.69,
-      "high": 2423.63,
-      "low": 2375.63,
-      "volume": 12500000,
-      "timestamp": 1794268046
-    },
-    "^VIX": {
-      "symbol": "^VIX",
-      "price": 14.94,
-      "previous_close": 15.62,
-      "change": -0.68,
-      "change_pct": -4.35,
-      "high": 15.09,
-      "low": 14.79,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 52389.75,
+      "previous_close": 51983.98,
+      "change": 405.77,
+      "change_pct": 0.78,
+      "high": 52574.34,
+      "low": 51643.01
     },
     "^SOX": {
-      "symbol": "^SOX",
-      "price": 5290.51,
-      "previous_close": 5206.39,
-      "change": 84.12,
-      "change_pct": 1.63,
-      "high": 5343.42,
-      "low": 5237.6,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 10033.93,
+      "previous_close": 10328.33,
+      "change": -294.4,
+      "change_pct": -2.85,
+      "high": 10116.64,
+      "low": 9467.26
+    },
+    "^VIX": {
+      "price": 19.92,
+      "previous_close": 20.83,
+      "change": -0.91,
+      "change_pct": -4.37,
+      "high": 25.08,
+      "low": 19.64
     },
     "SMH": {
-      "symbol": "SMH",
-      "price": 255.4,
-      "previous_close": 251.3,
-      "change": 4.1,
-      "change_pct": 1.63,
-      "high": 257.95,
-      "low": 252.85,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 487.41,
+      "previous_close": 508.31,
+      "change": -20.9,
+      "change_pct": -4.11,
+      "high": 490.47,
+      "low": 462.88
+    },
+    "^RUT": {
+      "price": 2840.81,
+      "previous_close": 2805.88,
+      "change": 34.93,
+      "change_pct": 1.24,
+      "high": 2852.68,
+      "low": 2784.04
     },
     "PGJ": {
-      "symbol": "PGJ",
-      "price": 26.85,
-      "previous_close": 26.5,
-      "change": 0.35,
-      "change_pct": 1.32,
-      "high": 27.12,
-      "low": 26.58,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 22.28,
+      "previous_close": 21.3,
+      "change": 0.98,
+      "change_pct": 4.6,
+      "high": 22.3,
+      "low": 22.12
     }
   },
   "tech_leaders": {
     "NVDA": {
-      "symbol": "NVDA",
-      "price": 147.63,
-      "previous_close": 144.38,
-      "change": 3.25,
-      "change_pct": 2.25,
-      "high": 149.11,
-      "low": 146.15,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 178.67,
+      "previous_close": 202.06,
+      "change": -23.39,
+      "change_pct": -11.58,
+      "high": 179.92,
+      "low": 170.24
     },
     "TSM": {
-      "symbol": "TSM",
-      "price": 201.2,
-      "previous_close": 196.7,
-      "change": 4.5,
-      "change_pct": 2.29,
-      "high": 203.21,
-      "low": 199.19,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 388.62,
+      "previous_close": 398.63,
+      "change": -10.01,
+      "change_pct": -2.51,
+      "high": 394.39,
+      "low": 380.33
     },
     "ASML": {
-      "symbol": "ASML",
-      "price": 725.1,
-      "previous_close": 715.3,
-      "change": 9.8,
-      "change_pct": 1.37,
-      "high": 732.35,
-      "low": 717.85,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 1513.25,
+      "previous_close": 1526.14,
+      "change": -12.89,
+      "change_pct": -0.84,
+      "high": 1525.83,
+      "low": 1468.02
     },
     "AMD": {
-      "symbol": "AMD",
-      "price": 148.5,
-      "previous_close": 146.4,
-      "change": 2.1,
-      "change_pct": 1.43,
-      "high": 149.99,
-      "low": 147.01,
-      "volume": 12500000,
-      "timestamp": 1794268046
-    },
-    "QCOM": {
-      "symbol": "QCOM",
-      "price": 172.8,
-      "previous_close": 170.9,
-      "change": 1.9,
-      "change_pct": 1.11,
-      "high": 174.53,
-      "low": 171.07,
-      "volume": 12500000,
-      "timestamp": 1794268046
-    },
-    "AAPL": {
-      "symbol": "AAPL",
-      "price": 226.96,
-      "previous_close": 227.24,
-      "change": -0.28,
-      "change_pct": -0.12,
-      "high": 229.23,
-      "low": 224.69,
-      "volume": 12500000,
-      "timestamp": 1794268046
-    },
-    "MSFT": {
-      "symbol": "MSFT",
-      "price": 422.54,
-      "previous_close": 419.89,
-      "change": 2.65,
-      "change_pct": 0.63,
-      "high": 426.77,
-      "low": 418.31,
-      "volume": 12500000,
-      "timestamp": 1794268046
-    },
-    "GOOGL": {
-      "symbol": "GOOGL",
-      "price": 179.8,
-      "previous_close": 178.7,
-      "change": 1.1,
-      "change_pct": 0.62,
-      "high": 181.6,
-      "low": 178.0,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 508.58,
+      "previous_close": 466.84,
+      "change": 41.74,
+      "change_pct": 8.94,
+      "high": 515.18,
+      "low": 468.21
     },
     "AVGO": {
-      "symbol": "AVGO",
-      "price": 182.4,
-      "previous_close": 179.3,
-      "change": 3.1,
-      "change_pct": 1.73,
-      "high": 184.22,
-      "low": 180.58,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 319.48,
+      "previous_close": 322.23,
+      "change": -2.75,
+      "change_pct": -0.85,
+      "high": 323.05,
+      "low": 304.29
     },
     "MU": {
-      "symbol": "MU",
-      "price": 115.6,
-      "previous_close": 113.2,
-      "change": 2.4,
-      "change_pct": 2.12,
-      "high": 116.76,
-      "low": 114.44,
-      "volume": 12500000,
-      "timestamp": 1794268046
+      "price": 733.15,
+      "previous_close": 833.59,
+      "change": -100.44,
+      "change_pct": -12.05,
+      "high": 744.46,
+      "low": 689.65
+    },
+    "MSFT": {
+      "price": 545.18,
+      "previous_close": 507.12,
+      "change": 38.06,
+      "change_pct": 7.51,
+      "high": 548.28,
+      "low": 538.7
+    },
+    "GOOGL": {
+      "price": 288.15,
+      "previous_close": 278.99,
+      "change": 9.16,
+      "change_pct": 3.28,
+      "high": 296.33,
+      "low": 288.09
+    },
+    "AAPL": {
+      "price": 350.69,
+      "previous_close": 338.32,
+      "change": 12.37,
+      "change_pct": 3.66,
+      "high": 352.28,
+      "low": 344.78
+    },
+    "QCOM": {
+      "price": 171.47,
+      "previous_close": 162.08,
+      "change": 9.39,
+      "change_pct": 5.79,
+      "high": 176.28,
+      "low": 163.29
     }
   },
   "vix_analysis": {
-    "vix_value": 14.94,
-    "vix_change_pct": -4.35,
-    "state": "极度平稳 / 低波动期",
-    "color": "#10b981",
-    "advice": "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。",
-    "risk_level": "极低 (Level 1)",
-    "is_spiking": false
-  },
-  "money_effect": {
-    "avg_tech_change_pct": 1.34,
-    "up_count": 9,
-    "down_count": 1,
-    "top_gainers": [
-      [
-        "TSM",
-        2.29
-      ],
-      [
-        "NVDA",
-        2.25
-      ],
-      [
-        "MU",
-        2.12
-      ]
-    ],
-    "top_losers": [
-      [
-        "AAPL",
-        -0.12
-      ]
-    ],
-    "dominant_style": "进攻型成长 (High Beta Tech)",
-    "money_theme": "科技极度亢奋：AI算力与半导体主线全面爆发，资金激进进攻"
+    "vix_value": 19.92,
+    "vix_change_pct": -4.37,
+    "state": "健康常态 / 情绪均衡",
+    "advice": "波动率处于历史均值区间，以基本面与业绩驱动为主，顺势操作。"
   },
   "star50_prediction": {
-    "composite_score": 1.53,
-    "expected_open_gap_pct": 0.69,
-    "verdict": "强力看多 (STRONG BULLISH)",
-    "sentiment_tag": "大幅高开抢筹预期",
-    "action_code": "BUY_AGGRESSIVE",
-    "opening_strategy": "开盘集合竞价 (09:15-09:25) 重点关注半导体算力龙头高开幅度。若高开在 +1.2% 以内且封单充沛，可果断执行进攻买入；预期日内将走出共振单边行情。",
-    "risk_alert": "防范冲高回落：若高开超 +2.5% 严禁无脑追涨，等待开盘15分钟分时回踩确认均线支撑后再行低吸。",
-    "mapping_details": [
-      {
-        "foreign": "NVDA (英伟达)",
-        "pct": "+2.25%",
-        "domestic_target": "寒武纪 / 海光信息",
-        "link_logic": "AI GPU算力与国产生态共振"
-      },
-      {
-        "foreign": "TSM (台积电)",
-        "pct": "+2.29%",
-        "domestic_target": "中芯国际 / 华虹半导体",
-        "link_logic": "先进制程与晶圆代工产能情绪"
-      },
-      {
-        "foreign": "ASML (阿斯麦)",
-        "pct": "+1.37%",
-        "domestic_target": "北方华创 / 拓荆科技",
-        "link_logic": "半导体设备自主可控预期"
-      },
-      {
-        "foreign": "^SOX (费半指数)",
-        "pct": "+1.63%",
-        "domestic_target": "科创50 ETF (588000)",
-        "link_logic": "半导体行业整体贝塔传导 (权重超40%)"
-      }
-    ]
+    "composite_score": -2.56,
+    "expected_open_gap_pct": -1.15,
+    "verdict": "偏空承压 · 谨慎防守 (BEARISH BIAS)",
+    "action_code": "谨慎减仓 (DEFENSIVE)",
+    "opening_strategy": "美股科技与半导体回调拖累科创板开盘情绪，预计低开。短线交易者开盘切忌盲目抄底，先行减仓防守。",
+    "risk_alert": "重点观察中芯国际港股(00981.HK)早盘承接力，若跌破关键均线坚决规避。"
   },
-  "news": [
-    {
-      "title": "NVIDIA Blackwell Ultra AI Architecture Accelerates Data Center Demand",
-      "link": "https://finance.yahoo.com",
-      "pubDate": "Recent",
-      "summary": "AI算力集群需求持续强劲，台积电先进制程产能利用率满载，提振全球芯片供应链预期。",
-      "impact_level": "重大影响 (High Impact)"
-    },
-    {
-      "title": "Fed Signals Data-Dependent Path Following Steady Inflation Prints",
-      "link": "https://finance.yahoo.com",
-      "pubDate": "Recent",
-      "summary": "美联储官员表态暗示流动性环境平稳，市场对于降息周期预期保持平稳，未现极端流动性冲击。",
-      "impact_level": "重大影响 (High Impact)"
-    },
-    {
-      "title": "PHLX Semiconductor Index Climbs as Memory & Foundry Momentum Resumes",
-      "link": "https://finance.yahoo.com",
-      "pubDate": "Recent",
-      "summary": "费城半导体指数走强，存储与设备板块领跑，提振次日亚太与A股科创半导体资产估值情绪。",
-      "impact_level": "常规关注 (Normal)"
-    }
-  ]
+  "money_effect": {
+    "avg_tech_change_pct": 0.13,
+    "up_count": 5,
+    "down_count": 5,
+    "dominant_style": "防御分化轮动 (Defensive / Rotation)",
+    "money_theme": "科技震荡分化，资金趋于防御"
+  }
 }

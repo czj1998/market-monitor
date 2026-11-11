@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11 00:21:34",
+  "generated_at": "2026-11-11 01:03:52",
   "indices": {
     "^GSPC": {
       "price": 7520.93,
@@ -43,9 +43,9 @@
     },
     "SMH": {
       "price": 483.63,
-      "previous_close": 487.41,
-      "change": -3.78,
-      "change_pct": -0.78,
+      "previous_close": 463.96,
+      "change": 19.67,
+      "change_pct": 4.24,
       "high": 492.74,
       "low": 474.03
     },
@@ -59,9 +59,9 @@
     },
     "PGJ": {
       "price": 21.97,
-      "previous_close": 22.28,
-      "change": -0.31,
-      "change_pct": -1.39,
+      "previous_close": 22.54,
+      "change": -0.57,
+      "change_pct": -2.53,
       "high": 21.97,
       "low": 21.86
     }
@@ -69,81 +69,81 @@
   "tech_leaders": {
     "NVDA": {
       "price": 168.89,
-      "previous_close": 178.67,
-      "change": -9.78,
-      "change_pct": -5.47,
+      "previous_close": 186.64,
+      "change": -17.75,
+      "change_pct": -9.51,
       "high": 174.65,
       "low": 165.89
     },
     "TSM": {
       "price": 396.48,
-      "previous_close": 388.62,
-      "change": 7.86,
-      "change_pct": 2.02,
+      "previous_close": 375.44,
+      "change": 21.04,
+      "change_pct": 5.6,
       "high": 400.21,
       "low": 387.2
     },
     "ASML": {
       "price": 1507.85,
-      "previous_close": 1513.25,
-      "change": -5.4,
-      "change_pct": -0.36,
+      "previous_close": 1424.75,
+      "change": 83.1,
+      "change_pct": 5.83,
       "high": 1545.71,
       "low": 1492.0
     },
     "AMD": {
       "price": 515.21,
-      "previous_close": 508.58,
-      "change": 6.63,
-      "change_pct": 1.3,
+      "previous_close": 449.04,
+      "change": 66.17,
+      "change_pct": 14.74,
       "high": 539.25,
       "low": 495.0
     },
     "AVGO": {
       "price": 331.98,
-      "previous_close": 319.48,
-      "change": 12.5,
-      "change_pct": 3.91,
+      "previous_close": 293.69,
+      "change": 38.29,
+      "change_pct": 13.04,
       "high": 334.67,
       "low": 316.69
     },
     "MU": {
       "price": 725.11,
-      "previous_close": 733.15,
-      "change": -8.04,
-      "change_pct": -1.1,
+      "previous_close": 690.0,
+      "change": 35.11,
+      "change_pct": 5.09,
       "high": 745.64,
       "low": 699.63
     },
     "MSFT": {
       "price": 533.16,
-      "previous_close": 545.18,
-      "change": -12.02,
-      "change_pct": -2.2,
+      "previous_close": 530.61,
+      "change": 2.55,
+      "change_pct": 0.48,
       "high": 544.15,
       "low": 526.37
     },
     "GOOGL": {
       "price": 287.38,
-      "previous_close": 288.15,
-      "change": -0.77,
-      "change_pct": -0.27,
+      "previous_close": 284.78,
+      "change": 2.6,
+      "change_pct": 0.91,
       "high": 292.02,
       "low": 285.68
     },
     "AAPL": {
       "price": 348.51,
-      "previous_close": 350.69,
-      "change": -2.18,
-      "change_pct": -0.62,
+      "previous_close": 342.37,
+      "change": 6.14,
+      "change_pct": 1.79,
       "high": 353.87,
       "low": 346.46
     },
     "QCOM": {
       "price": 173.53,
-      "previous_close": 171.47,
-      "change": 2.06,
-      "change_pct": 1.2,
+      "previous_close": 165.41,
+      "change": 8.12,
+      "change_pct": 4.91,
       "high": 174.39,
       "low": 167.2
     }
@@ -155,32 +155,32 @@
     "advice": "市场情绪乐观，无系统性做空风险，科技成长股估值环境舒适。"
   },
   "star50_prediction": {
-    "composite_score": -0.87,
-    "expected_open_gap_pct": -0.39,
+    "composite_score": -1.11,
+    "expected_open_gap_pct": -0.5,
     "verdict": "中性观望 · 保持不动 (NEUTRAL / WAIT)",
     "action_code": "观望等待 (HOLD_WAIT)",
     "opening_strategy": "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，静待盘中方向确认。",
     "risk_alert": "密切关注上午 11:30 及午盘 12:40 港股半导体与韩国KOSPI走势，若午间共振则在 13:00 执行午盘套利。"
   },
   "money_effect": {
-    "avg_tech_change_pct": -0.16,
-    "up_count": 4,
-    "down_count": 6,
-    "dominant_style": "防御分化轮动 (Defensive / Rotation)",
-    "money_theme": "科技震荡分化，资金趋于防御"
+    "avg_tech_change_pct": 4.29,
+    "up_count": 9,
+    "down_count": 1,
+    "dominant_style": "进攻型成长 (High Beta Tech)",
+    "money_theme": "科技主线全面爆发，资金激进进攻"
   },
   "midday_arbitrage": {
     "smic": {
       "name": "中芯国际",
       "price": 47.24,
-      "prev": 46.04,
-      "pct": 2.61
+      "prev": 47.24,
+      "pct": 0.0
     },
     "huahong": {
       "name": "华虹宏力",
       "price": 74.55,
-      "prev": 71.85,
-      "pct": 3.76
+      "prev": 74.55,
+      "pct": 0.0
     },
     "star_etf": {
       "name": "科创50ETF华夏",
@@ -189,8 +189,8 @@
       "pct": 0.75
     },
     "ks11": {
-      "price": 5246.14,
-      "pct": 4.53
+      "price": 5208.35,
+      "pct": 3.78
     }
   }
 }

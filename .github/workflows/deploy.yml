@@ -2,14 +2,14 @@ name: 自动更新美股与科创50数据
 
 on:
   schedule:
-    # 1. A股盘前全景早报：北京时间 07:34 (UTC 23:34，避开整点大拥堵)
-    - cron: '34 23 * * 0-4'
+    # 1. A股盘前全景早报：北京时间 07:46 (UTC 23:46，周日至周四对应A股周一至周五开盘)
+    - cron: '46 23 * * 0-4'
     
-    # 2. 午盘跨市套利：北京时间 12:42 (UTC 04:42，避开整点大拥堵)
+    # 2. 午盘跨市套利：北京时间 12:42 (UTC 04:42，周一至周五)
     - cron: '42 4 * * 1-5'
     
-    # 3. 美股收盘定调：北京时间 05:13 (UTC 21:13，避开整点大拥堵)
-    - cron: '13 21 * * 1-5'
+    # 3. 美股收盘定调：北京时间 05:13 (UTC 21:13，周日至周四对应周一至周五清晨)
+    - cron: '13 21 * * 0-4'
 
   workflow_dispatch: # 支持随时在 GitHub 网页上一键手动点击刷新！
 
@@ -32,10 +32,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: 执行数据拉取(美股Yahoo+午盘腾讯财经)并更新网页
+      - name: 执行数据拉取(美股Yahoo+午盘腾讯财经+新闻RSS)并更新网页
         run: |
           python3 - << 'PY_SCRIPT'
-          import json, re, time, datetime, urllib.request, urllib.parse
+          import json, re, time, datetime, urllib.request, urllib.parse, xml.etree.ElementTree as ET
 
           HEADERS_YAHOO = {
               "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -56,7 +56,6 @@ jobs:
                   meta = data["chart"]["result"][0]["meta"]
                   price = round(meta.get("regularMarketPrice", 0.0), 2)
                   
-                  # 精准昨收判定
                   prev = meta.get("previousClose") or meta.get("regularMarketPreviousClose")
                   if not prev:
                       try:
@@ -77,10 +76,40 @@ jobs:
                       "high": round(meta.get("regularMarketDayHigh", price), 2),
                       "low": round(meta.get("regularMarketDayLow", price), 2)
                   }
-              except Exception as e:
+              except Exception:
                   return None
 
-          # 2. 午盘套利专属：接入腾讯财经极速 API (抓取港股中芯国际00981、华虹01347与科创588000)
+          # 2. 抓取雅虎财经重大要闻 RSS
+          def fetch_yahoo_news():
+              url = "https://feeds.finance.yahoo.com/rss/2.0/headline?s=^GSPC,NVDA,TSM,^SOX&region=US&lang=en-US"
+              news_list = []
+              try:
+                  req = urllib.request.Request(url, headers=HEADERS_YAHOO)
+                  with urllib.request.urlopen(req, timeout=8) as resp:
+                      root = ET.fromstring(resp.read())
+                  ch = root.find("channel")
+                  if ch is not None:
+                      for idx, item in enumerate(ch.findall("item")[:8]):
+                          title = item.findtext("title", "")
+                          pub = item.findtext("pubDate", "")[:16]
+                          desc = re.sub(r'<[^>]+>', '', item.findtext("description", ""))
+                          summary = desc[:180] + "..." if len(desc) > 180 else desc
+                          tl = title.lower()
+                          is_high = any(k in tl for k in ["fed", "rate", "cpi", "inflation", "nvidia", "tsmc", "chip", "ai", "tariff", "surge", "drop"])
+                          news_list.append({
+                              "id": idx + 1,
+                              "impact": "HIGH" if is_high else "NORMAL",
+                              "tag": "美股科技/宏观" if is_high else "市场动态",
+                              "title": title,
+                              "source": f"Yahoo Finance · {pub}",
+                              "summary": summary or title,
+                              "sentiment": "BULLISH"
+                          })
+              except Exception as e:
+                  print(f"News fetch fallback: {e}")
+              return news_list
+
+          # 3. 午盘套利专属：接入腾讯财经极速 API (抓取港股中芯国际00981、华虹01347与科创588000)
           def fetch_tencent_arbitrage():
               url = "https://qt.gtimg.cn/q=r_hk00981,r_hk01347,sh588000"
               result = {}
@@ -112,13 +141,11 @@ jobs:
               q = fetch_yahoo(s)
               quotes[s] = q if q else {"price": 100.0, "change": 0.0, "change_pct": 0.0, "high": 101.0, "low": 99.0}
 
-          # 腾讯财经获取港股芯片真实盘口
           tc_data = fetch_tencent_arbitrage()
           smic_hk = tc_data.get("00981", {"price": 27.34, "prev": 26.85, "pct": 1.82})
           hh_hk = tc_data.get("01347", {"price": 21.86, "prev": 21.40, "pct": 2.15})
           star_etf = tc_data.get("588000", {"price": 1.050, "prev": 1.035, "pct": 1.45})
 
-          # 韩国综合指数 (^KS11)
           ks_quote = fetch_yahoo("^KS11")
           ks_price = ks_quote["price"] if ks_quote else 2581.9
           ks_pct = ks_quote["change_pct"] if ks_quote else 0.85
@@ -152,11 +179,16 @@ jobs:
               action = "逢低低吸 (BUY_DIP)"
               strategy = "次日早盘 588000 情绪偏暖，预计温和高开 (+0.3% ~ +0.8%)。重点跟随中芯国际与澜起科技分时量能，可在盘初回踩均线时顺势建仓。"
               risk = "若早盘成交量萎缩则警惕多头动能不足，设定 1.0% 日内刚性止损位。"
-          else:
+          elif score > -0.5:
               verdict = "中性观望 · 保持不动 (NEUTRAL / WAIT)"
               action = "观望等待 (HOLD_WAIT)"
               strategy = "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，静待盘中方向确认。"
               risk = "密切关注上午 11:30 及午盘 12:40 港股半导体与韩国KOSPI走势，若午间共振则在 13:00 执行午盘套利。"
+          else:
+              verdict = "偏空承压 · 谨慎防守 (BEARISH BIAS)"
+              action = "谨慎减仓 (DEFENSIVE)"
+              strategy = "美股科技与半导体回调拖累科创板开盘情绪，预计低开。短线交易者开盘切忌盲目抄底，先行减仓防守。"
+              risk = "重点观察中芯国际港股(00981.HK)早盘承接力，若跌破关键均线坚决规避。"
 
           star50_prediction = {
               "composite_score": round(score, 2), "expected_open_gap_pct": gap, "verdict": verdict,
@@ -172,7 +204,10 @@ jobs:
           money_theme = "科技主线全面爆发，资金激进进攻" if avg_pct > 0.5 else "科技震荡分化，资金趋于防御"
           money_effect = {"avg_tech_change_pct": avg_pct, "up_count": up_c, "down_count": down_c, "dominant_style": dominant_style, "money_theme": money_theme}
 
-          now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          # 严格使用北京时间 (UTC+8)
+          bj_now = datetime.datetime.utcnow() + datetime.timedelta(hours=8)
+          now_str = bj_now.strftime("%Y-%m-%d %H:%M:%S (北京时间)")
+          
           report = {
               "generated_at": now_str,
               "indices": {s: quotes[s] for s in symbols["indices"]},
@@ -180,6 +215,7 @@ jobs:
               "vix_analysis": vix_analysis,
               "star50_prediction": star50_prediction,
               "money_effect": money_effect,
+              "news": fetch_yahoo_news(),
               "midday_arbitrage": {
                   "smic": smic_hk, "huahong": hh_hk, "star_etf": star_etf,
                   "ks11": {"price": ks_price, "pct": ks_pct}
@@ -207,7 +243,7 @@ jobs:
               except Exception as e:
                   print(f"Error {fn}: {e}")
 
-          print("Successfully updated with Yahoo Finance (US) + Tencent Finance (Midday Arbitrage)!")
+          print("Successfully updated at", now_str)
           PY_SCRIPT
 
       - name: 提交更新并推送到 GitHub Pages

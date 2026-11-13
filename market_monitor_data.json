@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-13 01:48:21",
+  "generated_at": "2026-11-13 03:33:44",
   "indices": {
     "^GSPC": {
       "price": 7592.4,
@@ -172,25 +172,25 @@
   "midday_arbitrage": {
     "smic": {
       "name": "中芯国际",
-      "price": 51.45,
+      "price": 49.1,
       "prev": 48.74,
-      "pct": 5.56
+      "pct": 0.74
     },
     "huahong": {
       "name": "华虹宏力",
-      "price": 79.0,
+      "price": 74.05,
       "prev": 77.0,
-      "pct": 2.6
+      "pct": -3.83
     },
     "star_etf": {
       "name": "科创50ETF华夏",
-      "price": 1.401,
+      "price": 1.377,
       "prev": 1.381,
-      "pct": 1.45
+      "pct": -0.29
     },
     "ks11": {
-      "price": 5471.45,
-      "pct": 1.79
+      "price": 5377.45,
+      "pct": 0.65
     }
   }
 }

@@ -1,171 +1,171 @@
 {
-  "generated_at": "2026-11-20 13:37:41",
+  "generated_at": "2026-11-21 02:10:20",
   "indices": {
     "^GSPC": {
-      "price": 7175.83,
-      "previous_close": 7323.63,
-      "change": -147.8,
-      "change_pct": -2.02,
-      "high": 7415.64,
-      "low": 7173.63
+      "price": 6910.39,
+      "previous_close": 7175.83,
+      "change": -265.44,
+      "change_pct": -3.7,
+      "high": 7198.67,
+      "low": 6882.66
     },
     "^IXIC": {
-      "price": 23879.2,
-      "previous_close": 24429.88,
-      "change": -550.68,
-      "change_pct": -2.25,
-      "high": 24939.62,
-      "low": 23870.69
+      "price": 22617.73,
+      "previous_close": 23879.2,
+      "change": -1261.47,
+      "change_pct": -5.28,
+      "high": 23837.76,
+      "low": 22513.01
     },
     "^DJI": {
-      "price": 49097.06,
-      "previous_close": 50198.17,
-      "change": -1101.11,
-      "change_pct": -2.19,
-      "high": 50454.81,
-      "low": 49091.92
+      "price": 48147.33,
+      "previous_close": 49097.06,
+      "change": -949.73,
+      "change_pct": -1.93,
+      "high": 49594.9,
+      "low": 47998.86
     },
     "^SOX": {
-      "price": 9419.72,
-      "previous_close": 9652.8,
-      "change": -233.08,
-      "change_pct": -2.41,
-      "high": 10109.88,
-      "low": 9412.19
+      "price": 8408.59,
+      "previous_close": 9419.72,
+      "change": -1011.13,
+      "change_pct": -10.73,
+      "high": 9204.42,
+      "low": 8342.21
     },
     "^VIX": {
-      "price": 30.93,
+      "price": 35.89,
       "previous_close": 28.44,
-      "change": 2.49,
-      "change_pct": 8.76,
-      "high": 31.1,
-      "low": 28.38
+      "change": 7.45,
+      "change_pct": 26.2,
+      "high": 40.03,
+      "low": 26.94
     },
     "SMH": {
-      "price": 447.48,
-      "previous_close": 459.54,
-      "change": -12.06,
-      "change_pct": -2.62,
-      "high": 479.96,
-      "low": 447.2
+      "price": 400.06,
+      "previous_close": 447.48,
+      "change": -47.42,
+      "change_pct": -10.6,
+      "high": 438.44,
+      "low": 396.85
     },
     "^RUT": {
-      "price": 2655.11,
-      "previous_close": 2714.31,
-      "change": -59.2,
-      "change_pct": -2.18,
-      "high": 2730.01,
-      "low": 2653.92
+      "price": 2581.79,
+      "previous_close": 2655.11,
+      "change": -73.32,
+      "change_pct": -2.76,
+      "high": 2665.14,
+      "low": 2577.09
     },
     "PGJ": {
-      "price": 20.06,
-      "previous_close": 20.43,
-      "change": -0.37,
-      "change_pct": -1.81,
-      "high": 20.45,
-      "low": 20.04
+      "price": 19.37,
+      "previous_close": 20.06,
+      "change": -0.69,
+      "change_pct": -3.44,
+      "high": 19.9,
+      "low": 19.37
     }
   },
   "tech_leaders": {
     "NVDA": {
-      "price": 145.98,
-      "previous_close": 150.96,
-      "change": -4.98,
-      "change_pct": -3.3,
-      "high": 158.13,
-      "low": 145.71
+      "price": 125.53,
+      "previous_close": 145.98,
+      "change": -20.45,
+      "change_pct": -14.01,
+      "high": 143.72,
+      "low": 124.5
     },
     "TSM": {
-      "price": 352.09,
-      "previous_close": 362.62,
-      "change": -10.53,
-      "change_pct": -2.9,
-      "high": 374.77,
-      "low": 351.14
+      "price": 318.71,
+      "previous_close": 352.09,
+      "change": -33.38,
+      "change_pct": -9.48,
+      "high": 343.75,
+      "low": 318.48
     },
     "ASML": {
-      "price": 1356.2,
-      "previous_close": 1395.27,
-      "change": -39.07,
-      "change_pct": -2.8,
-      "high": 1443.72,
-      "low": 1354.3
+      "price": 1266.22,
+      "previous_close": 1356.2,
+      "change": -89.98,
+      "change_pct": -6.63,
+      "high": 1336.76,
+      "low": 1258.7
     },
     "AMD": {
-      "price": 489.19,
-      "previous_close": 530.14,
-      "change": -40.95,
-      "change_pct": -7.72,
-      "high": 555.01,
-      "low": 470.56
+      "price": 424.39,
+      "previous_close": 489.19,
+      "change": -64.8,
+      "change_pct": -13.25,
+      "high": 474.79,
+      "low": 418.76
     },
     "AVGO": {
-      "price": 346.65,
-      "previous_close": 354.05,
-      "change": -7.4,
-      "change_pct": -2.09,
-      "high": 369.26,
-      "low": 345.14
+      "price": 304.41,
+      "previous_close": 346.65,
+      "change": -42.24,
+      "change_pct": -12.19,
+      "high": 342.9,
+      "low": 301.02
     },
     "MU": {
-      "price": 690.44,
-      "previous_close": 705.27,
-      "change": -14.83,
-      "change_pct": -2.1,
-      "high": 760.0,
-      "low": 689.28
+      "price": 594.51,
+      "previous_close": 690.44,
+      "change": -95.93,
+      "change_pct": -13.89,
+      "high": 668.99,
+      "low": 585.25
     },
     "MSFT": {
-      "price": 498.3,
-      "previous_close": 508.29,
-      "change": -9.99,
-      "change_pct": -1.97,
-      "high": 526.49,
-      "low": 498.16
+      "price": 484.52,
+      "previous_close": 498.3,
+      "change": -13.78,
+      "change_pct": -2.77,
+      "high": 503.8,
+      "low": 481.03
     },
     "GOOGL": {
-      "price": 272.66,
-      "previous_close": 282.44,
-      "change": -9.78,
-      "change_pct": -3.46,
-      "high": 295.43,
-      "low": 272.36
+      "price": 265.29,
+      "previous_close": 272.66,
+      "change": -7.37,
+      "change_pct": -2.7,
+      "high": 283.14,
+      "low": 264.22
     },
     "AAPL": {
-      "price": 349.21,
-      "previous_close": 352.45,
-      "change": -3.24,
-      "change_pct": -0.92,
-      "high": 355.28,
-      "low": 346.47
+      "price": 342.56,
+      "previous_close": 349.21,
+      "change": -6.65,
+      "change_pct": -1.9,
+      "high": 354.3,
+      "low": 340.56
     },
     "QCOM": {
-      "price": 162.01,
-      "previous_close": 159.81,
-      "change": 2.2,
-      "change_pct": 1.38,
-      "high": 170.77,
-      "low": 160.39
+      "price": 149.94,
+      "previous_close": 162.01,
+      "change": -12.07,
+      "change_pct": -7.45,
+      "high": 162.54,
+      "low": 149.13
     }
   },
   "vix_analysis": {
-    "vix_value": 30.93,
-    "vix_change_pct": 8.76,
+    "vix_value": 35.89,
+    "vix_change_pct": 26.2,
     "state": "恐慌抛售 / 估值承压",
     "advice": "避险情绪升温，谨防盘中急跌跳水。"
   },
   "star50_prediction": {
-    "composite_score": -2.97,
-    "expected_open_gap_pct": -1.33,
+    "composite_score": -9.13,
+    "expected_open_gap_pct": -4.11,
     "verdict": "中性观望 · 保持不动 (NEUTRAL / WAIT)",
     "action_code": "观望等待 (HOLD_WAIT)",
     "opening_strategy": "隔夜外盘外溢效应中性，588000 次日开盘受内资存量博弈主导。维持现有底仓不动，静待盘中方向确认。",
     "risk_alert": "密切关注上午 11:30 及午盘 12:40 港股半导体与韩国KOSPI走势，若午间共振则在 13:00 执行午盘套利。"
   },
   "money_effect": {
-    "avg_tech_change_pct": -2.59,
-    "up_count": 1,
-    "down_count": 9,
+    "avg_tech_change_pct": -8.43,
+    "up_count": 0,
+    "down_count": 10,
     "dominant_style": "防御分化轮动 (Defensive / Rotation)",
     "money_theme": "科技震荡分化，资金趋于防御"
   },

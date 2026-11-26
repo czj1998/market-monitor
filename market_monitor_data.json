@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26 03:31:09",
+  "generated_at": "2026-11-26 05:23:50",
   "indices": {
     "^GSPC": {
       "price": 7182.78,
@@ -38,8 +38,8 @@
       "previous_close": 26.36,
       "change": 1.93,
       "change_pct": 7.32,
-      "high": 34.95,
-      "low": 27.49
+      "high": 0.0,
+      "low": 0.0
     },
     "SMH": {
       "price": 422.46,
@@ -112,7 +112,7 @@
       "previous_close": 629.79,
       "change": -28.54,
       "change_pct": -4.53,
-      "high": 604.95,
+      "high": 604.94,
       "low": 548.13
     },
     "MSFT": {
@@ -172,25 +172,25 @@
   "midday_arbitrage": {
     "smic": {
       "name": "中芯国际",
-      "price": 46.0,
+      "price": 46.7,
       "prev": 45.3,
-      "pct": 1.55
+      "pct": 3.09
     },
     "huahong": {
       "name": "华虹宏力",
-      "price": 64.85,
+      "price": 65.7,
       "prev": 62.5,
-      "pct": 3.76
+      "pct": 5.12
     },
     "star_etf": {
       "name": "科创50ETF华夏",
-      "price": 1.244,
+      "price": 1.252,
       "prev": 1.254,
-      "pct": -0.8
+      "pct": -0.16
     },
     "ks11": {
-      "price": 4731.51,
-      "pct": 0.72
+      "price": 4769.75,
+      "pct": 1.54
     }
   }
 }

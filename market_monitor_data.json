@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26 05:23:50",
+  "generated_at": "2026-11-26 14:29:13",
   "indices": {
     "^GSPC": {
       "price": 7182.78,
@@ -34,12 +34,12 @@
       "low": 8129.23
     },
     "^VIX": {
-      "price": 28.29,
-      "previous_close": 26.36,
-      "change": 1.93,
-      "change_pct": 7.32,
-      "high": 0.0,
-      "low": 0.0
+      "price": 27.11,
+      "previous_close": 28.29,
+      "change": -1.18,
+      "change_pct": -4.17,
+      "high": 27.54,
+      "low": 26.59
     },
     "SMH": {
       "price": 422.46,
@@ -112,7 +112,7 @@
       "previous_close": 629.79,
       "change": -28.54,
       "change_pct": -4.53,
-      "high": 604.94,
+      "high": 604.95,
       "low": 548.13
     },
     "MSFT": {
@@ -149,8 +149,8 @@
     }
   },
   "vix_analysis": {
-    "vix_value": 28.29,
-    "vix_change_pct": 7.32,
+    "vix_value": 27.11,
+    "vix_change_pct": -4.17,
     "state": "恐慌抛售 / 估值承压",
     "advice": "避险情绪升温，谨防盘中急跌跳水。"
   },
@@ -172,25 +172,25 @@
   "midday_arbitrage": {
     "smic": {
       "name": "中芯国际",
-      "price": 46.7,
+      "price": 45.88,
       "prev": 45.3,
-      "pct": 3.09
+      "pct": 1.28
     },
     "huahong": {
       "name": "华虹宏力",
-      "price": 65.7,
+      "price": 64.75,
       "prev": 62.5,
-      "pct": 5.12
+      "pct": 3.6
     },
     "star_etf": {
       "name": "科创50ETF华夏",
-      "price": 1.252,
+      "price": 1.233,
       "prev": 1.254,
-      "pct": -0.16
+      "pct": -1.67
     },
     "ks11": {
-      "price": 4769.75,
-      "pct": 1.54
+      "price": 4711.21,
+      "pct": 0.29
     }
   }
 }
